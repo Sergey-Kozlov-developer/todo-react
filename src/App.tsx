@@ -9,6 +9,10 @@ function App() {
 			<form className="todo__form">
 				<SearchTask />
 				<SelectButton />
+				<div
+					className="theme-toggle"
+					style={{ width: "50px", flexShrink: 0 }}
+				></div>
 			</form>
 			<TaskList />
 		</div>
