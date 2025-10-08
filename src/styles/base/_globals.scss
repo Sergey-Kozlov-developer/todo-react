@@ -1,0 +1,50 @@
+@use "helpers" as *;
+
+body {
+	@include fluid-text(18, 24);
+
+	display: flex;
+	flex-direction: column;
+	font-family: var(--font-family-base);
+	letter-spacing: -0.03em;
+	color: var(--color-light-text);
+	background-color: var(--color-light);
+}
+
+main {
+	flex-grow: 1;
+}
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+	color: var(--color-light-text);
+}
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3 {
+	font-family: var(--font-family-base);
+	font-weight: 500;
+}
+
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+	font-weight: 600;
+}

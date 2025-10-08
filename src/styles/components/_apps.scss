@@ -1,0 +1,28 @@
+@use "../base/helpers" as *;
+.todo {
+	margin-top: rem(40);
+
+	&__title {
+		margin-bottom: rem(18);
+		text-align: center;
+	}
+
+	&__form {
+		display: flex;
+		gap: rem(16);
+		align-items: flex-start;
+
+		& > * {
+			flex: 1;
+			min-width: 0; // Предотвращает переполнение
+		}
+
+		.search-task {
+			flex: 4;
+		}
+
+		.select {
+			flex: 1;
+		}
+	}
+}

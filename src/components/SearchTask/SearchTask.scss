@@ -1,0 +1,44 @@
+@use "../../styles/base/helpers" as *;
+
+.search-task {
+	width: 100%;
+	&__wrapper {
+		position: relative;
+		display: inline-block;
+		width: 100%;
+		&::after {
+			content: "";
+			position: absolute;
+			right: rem(12);
+			top: 50%;
+			transform: translateY(-50%);
+			pointer-events: none;
+			@include square(rem(20));
+			background: url("../../assets/images/icon-search.svg") no-repeat
+				center center;
+			background-size: contain; /* Чтобы иконка масштабировалась правильно */
+		}
+	}
+
+	&__input {
+		width: 100%;
+		padding: rem(12) rem(16);
+		border: var(--border-light);
+		border-radius: rem(8);
+		font-size: rem(16);
+		transition: all 0.3s ease;
+		&:focus {
+			outline: none;
+			border-color: var(--color-purple);
+			// Градиентная тень
+			box-shadow: 0 0 0 1px var(--color-purple),
+				0 4px 12px rgba(124, 58, 237, 0.1);
+			transform: translateY(-1px);
+		}
+		&::placeholder {
+			font-family: var(--font-family-accent);
+			font-weight: 500;
+			color: var(--color-light-placeholder);
+		}
+	}
+}

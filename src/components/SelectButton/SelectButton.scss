@@ -1,0 +1,9 @@
+@use "../../styles/base/helpers" as *;
+
+.select {
+	position: relative;
+	width: 100%;
+	&__button {
+		font-size: rem(18);
+	}
+}
