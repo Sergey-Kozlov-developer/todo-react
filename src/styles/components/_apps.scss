@@ -1,6 +1,7 @@
 @use "../base/helpers" as *;
 .todo {
 	margin-top: rem(40);
+	// position: relative;
 
 	&__title {
 		margin-bottom: rem(18);
@@ -9,20 +10,7 @@
 
 	&__form {
 		display: flex;
-		gap: rem(16);
-		align-items: flex-start;
-
-		& > * {
-			flex: 1;
-			min-width: 0; // Предотвращает переполнение
-		}
-
-		.search-task {
-			flex: 4;
-		}
-
-		.select {
-			flex: 1;
-		}
+		align-items: center;
+		justify-content: space-between;
 	}
 }

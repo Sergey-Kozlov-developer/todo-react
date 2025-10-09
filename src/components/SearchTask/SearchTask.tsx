@@ -2,7 +2,7 @@ import "./SearchTask.scss";
 
 const SearchTask = () => {
 	return (
-		<form className="search-task">
+		<div className="search-task">
 			<div className="search-task__wrapper">
 				<input
 					id="search-task"
@@ -12,7 +12,7 @@ const SearchTask = () => {
 					autoComplete="off"
 				/>
 			</div>
-		</form>
+		</div>
 	);
 };
 
