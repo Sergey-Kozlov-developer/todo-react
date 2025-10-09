@@ -89,7 +89,6 @@ const TaskList = () => {
 					</li>
 				))}
 			</ul>
-			<button>+</button>
 		</div>
 	);
 };

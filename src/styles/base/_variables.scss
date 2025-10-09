@@ -12,11 +12,16 @@
 
 	--color-done-task: rgba(37, 37, 37, 0.5);
 
+	--color-background: #534cc2;
 	// переменная ширины border
 	--border-light: #{rem(1)} solid var(--color-purple);
 	--border-dark: #{rem(1)} solid var(--color-light);
 
+	--border-hover: #{rem(2)} solid var(--color-purple);
+
 	--shadow: 0 0 0 #{rem(3)} #191919;
+	--shadow-light: 0 0 #{rem(4)} 0 var(--color-purple);
+	--shadow-hover: 0 0 #{rem(4)} 0 var(--color-purple);
 
 	--font-family-base: "Kanit", sans-serif;
 	--font-family-accent: "Inters", sans-serif;
