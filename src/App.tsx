@@ -9,6 +9,7 @@ import AddTaskModal from "./components/AddTaskModal";
 
 function App() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
+
 	return (
 		<div className="todo container">
 			<h1 className="todo__title">TODO LIST</h1>
@@ -26,10 +27,12 @@ function App() {
 					<img src={iconPlus} alt="Add task" />
 				</button>
 			</div>
-			<AddTaskModal
-				isOpen={isModalOpen}
-				onClose={() => setIsModalOpen(false)}
-			/>
+			{isModalOpen && (
+				<AddTaskModal
+					// isOpen={isModalOpen}
+					onClose={() => setIsModalOpen(false)}
+				/>
+			)}
 		</div>
 	);
 }

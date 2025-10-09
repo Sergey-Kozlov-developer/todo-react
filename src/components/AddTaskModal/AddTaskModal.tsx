@@ -1,11 +1,11 @@
 import type React from "react";
 
 interface AddTaskModalProps {
-	isOpen: boolean;
+	// isOpen: boolean;
 	onClose: () => void;
 }
 
-const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
+const AddTaskModal = ({ onClose }: AddTaskModalProps) => {
 	// клик вне окна
 	const handleOverlayClick = (e: React.MouseEvent) => {
 		if (e.target === e.currentTarget) {
@@ -13,7 +13,7 @@ const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
 		}
 	};
 
-	if (!isOpen) return null;
+	// if (!isOpen) return null;
 
 	return (
 		<div className="modal-overlay" onClick={handleOverlayClick}>

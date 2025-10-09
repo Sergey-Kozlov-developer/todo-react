@@ -3,6 +3,7 @@ import "./TaskList.scss";
 
 import editIcon from "../../assets/images/icon-edit.svg";
 import deleteIcon from "../../assets/images/icon-delete.svg";
+import EmptyBlock from "../EmptyBlock";
 
 interface Task {
 	id: string;
@@ -39,10 +40,13 @@ const TaskList = () => {
 		);
 	};
 
+	if (tasks.length === 0) {
+		<EmptyBlock />;
+	}
+
 	return (
 		<div className="task-list">
 			<ul className="task-list__items">
-				{/* del */}
 				{tasks.map((task) => (
 					<li key={task.id} className="task-list__item">
 						<div className="task-list__content">
