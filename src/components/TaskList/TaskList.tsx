@@ -1,9 +1,9 @@
 import { useState } from "react";
 import "./TaskList.scss";
 
-import editIcon from "../../assets/images/icon-edit.svg";
-import deleteIcon from "../../assets/images/icon-delete.svg";
 import EmptyBlock from "../EmptyBlock";
+import IconDelete from "../Icon/IconDelete";
+import IconEdit from "../Icon/IconEdit";
 
 interface Task {
 	id: string;
@@ -41,7 +41,7 @@ const TaskList = () => {
 	};
 
 	if (tasks.length === 0) {
-		<EmptyBlock />;
+		return <EmptyBlock />;
 	}
 
 	return (
@@ -80,14 +80,14 @@ const TaskList = () => {
 								className="task-list__edit"
 								aria-label="Edit task"
 							>
-								<img src={editIcon} />
+								<IconEdit />
 							</button>
 
 							<button
 								className="task-list__delete"
 								aria-label="Delete task"
 							>
-								<img src={deleteIcon} />
+								<IconDelete />
 							</button>
 						</div>
 					</li>

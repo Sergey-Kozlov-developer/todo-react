@@ -4,9 +4,9 @@
 @use "./base/utils";
 @use "./base/globals";
 
-@use "./components/apps";
-
 @use "../components/SearchTask/SearchTask.scss";
 @use "../components/ToggleTheme/ToggleTheme.scss";
 @use "../components/AddTaskModal/AddTaskMadal.scss";
 @use "../components/EmptyBlock/EmptyBlock.scss";
+
+@use "../pages/Todo/Todo.scss";

@@ -1,11 +1,10 @@
 @use "../../styles/base/helpers" as *;
 
 .search-task {
-	// width: 100%;
 	&__wrapper {
 		position: relative;
 		display: inline-block;
-		// width: 100%;
+
 		&::after {
 			content: "";
 			position: absolute;
@@ -31,9 +30,7 @@
 		&:focus {
 			outline: none;
 			border-color: var(--color-purple);
-			// Градиентная тень
-			box-shadow: 0 0 0 1px var(--color-purple),
-				0 4px 12px rgba(124, 58, 237, 0.1);
+			box-shadow: var(--shadow-light);
 			transform: translateY(-1px);
 		}
 		&::placeholder {

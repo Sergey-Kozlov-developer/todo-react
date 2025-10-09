@@ -11,5 +11,9 @@
 		background: var(--color-purple);
 		border: none;
 		border-radius: rem(5);
+		transition: all 0.2s ease;
+		&:hover {
+			background: var(--color-background);
+		}
 	}
 }

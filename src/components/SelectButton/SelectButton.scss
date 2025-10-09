@@ -2,8 +2,6 @@
 
 .select {
 	position: relative;
-	// width: 100%;
-	// width: rem(93);
 
 	&__button {
 		width: rem(93);
@@ -14,10 +12,16 @@
 		border: var(--border-light);
 		border-radius: rem(5);
 		background: var(--color-purple);
+		box-shadow: var(--shadow-light);
 		cursor: pointer;
 		transition: all 0.2s ease;
 		font-size: rem(16);
 		min-height: rem(44); // Фиксированная высота как у инпута
+
+		&:hover,
+		&:focus {
+			background: var(--color-background);
+		}
 	}
 
 	&__value {
@@ -52,13 +56,13 @@
 		right: 0;
 		background: var(--color-light);
 		border: var(--border-light);
-		border-top: none;
-		border-radius: 0 0 rem(8) rem(8);
+		// border-top: none;
+		border-radius: rem(8);
 		margin: 0;
 		padding: rem(8) 0;
 		list-style: none;
 		z-index: 10;
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		box-shadow: 0 rem(4) rem(12) rgba(0, 0, 0, 0.1);
 		max-height: rem(200);
 		overflow-y: auto;
 

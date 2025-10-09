@@ -135,9 +135,20 @@
 		justify-content: center;
 		gap: rem(10);
 		@include square(18);
+	}
+	// не работает при наведении
+	&__edit:hover {
+		color: var(--color-purple);
 
-		&:hover {
-			background: #f8f9fa;
+		svg {
+			stroke: var(--color-purple);
+		}
+	}
+	&__delete:hover {
+		color: var(--color-trash);
+
+		svg {
+			stroke: var(--color-trash);
 		}
 	}
 }

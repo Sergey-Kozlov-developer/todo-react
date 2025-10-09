@@ -18,10 +18,13 @@
 	--border-dark: #{rem(1)} solid var(--color-light);
 
 	--border-hover: #{rem(2)} solid var(--color-purple);
+	--border-focus: 2px solid rgba(108, 99, 255, 0.4);
 
 	--shadow: 0 0 0 #{rem(3)} #191919;
 	--shadow-light: 0 0 #{rem(4)} 0 var(--color-purple);
 	--shadow-hover: 0 0 #{rem(4)} 0 var(--color-purple);
+
+	--color-trash: #e50000;
 
 	--font-family-base: "Kanit", sans-serif;
 	--font-family-accent: "Inters", sans-serif;
