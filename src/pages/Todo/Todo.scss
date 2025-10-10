@@ -1,5 +1,5 @@
 @use "../../styles/base/helpers" as *;
-
+@use "../../styles/base/variables" as *;
 .todo {
 	margin-top: rem(40);
 
@@ -30,7 +30,6 @@
 			transition: all 0.3s ease;
 
 			&:hover {
-				// border: var(--border-hover);
 				background: var(--color-background);
 			}
 		}

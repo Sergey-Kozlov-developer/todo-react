@@ -1,0 +1,14 @@
+@use "../helpers" as *;
+
+:root {
+	--font-family-base: "Kanit", sans-serif;
+	--font-family-accent: "Inters", sans-serif;
+
+	--container-width: #{rem(750)};
+	// внутренние границы(можно посмотреть по mobile макету)
+	--container-padding-x: #{rem(16)};
+
+	@include laptop {
+		--container-width: #{rem(1280)};
+	}
+}

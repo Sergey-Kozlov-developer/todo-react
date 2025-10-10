@@ -1,0 +1,38 @@
+@use "../../styles/base/helpers" as *;
+@use "../../styles/base/variables" as *;
+.search-task {
+    position: relative;
+    display: inline-block;
+
+    &__input {
+        width: rem(563);
+        padding: rem(10) rem(40) rem(10) rem(16);
+        border: var(--border-light);
+        border-radius: rem(8);
+        font-size: rem(16);
+        transition: all 0.3s ease;
+        &:focus {
+            outline: none;
+            border-color: var(--color-purple);
+            box-shadow: var(--shadow-light);
+            transform: translateY(-1px);
+        }
+        &::placeholder {
+            font-family: var(--font-family-accent);
+            font-weight: 500;
+            color: var(--color-light-placeholder);
+        }
+    }
+
+    &__button {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        right: rem(20);
+        border: none;
+        background: transparent;
+        color: var(--color-purple);
+        @include square(rem(20));
+    }
+}

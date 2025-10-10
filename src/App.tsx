@@ -1,7 +1,8 @@
-import Todo from "./pages/Todo";
+import Todo from "./pages/Todo/Todo.tsx";
+
 
 function App() {
-	return <Todo />;
+    return <Todo/>;
 }
 
 export default App;

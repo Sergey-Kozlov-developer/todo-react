@@ -1,100 +1,103 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import "./TaskList.scss";
 
-import EmptyBlock from "../EmptyBlock";
 import IconDelete from "../Icon/IconDelete";
 import IconEdit from "../Icon/IconEdit";
+import EmptyBlock from "../EmptyBlock/EmptyBlock.tsx";
 
-interface Task {
-	id: string;
-	text: string;
-	completed: boolean;
+interface ITask {
+    id: string;
+    text: string;
+    completed: boolean;
 }
 
 const TaskList = () => {
-	const [tasks, setTasks] = useState<Task[]>([
-		{
-			id: "1",
-			text: "Note #1",
-			completed: false,
-		},
-		{
-			id: "2",
-			text: "Note #2",
-			completed: false,
-		},
-		{
-			id: "3",
-			text: "Note #3",
-			completed: false,
-		},
-	]);
+    const [tasks, setTasks] = useState<ITask[]>([
+        {
+            id: "1",
+            text: "Note #1",
+            completed: false,
+        },
+        {
+            id: "2",
+            text: "Note #2",
+            completed: true,
+        },
+        {
+            id: "3",
+            text: "Note #3",
+            completed: false,
+        },
+    ]);
 
-	const toggleTaskCompletion = (taskId: string) => {
-		setTasks(
-			tasks.map((task) =>
-				task.id === taskId
-					? { ...task, completed: !task.completed }
-					: task
-			)
-		);
-	};
+    const toggleTaskCompletion = useCallback(
+        (taskId: string) => {
+            setTasks(
+                tasks.map((task) =>
+                    task.id === taskId
+                        ? { ...task, completed: !task.completed }
+                        : task
+                )
+            );
+        },
+        [tasks]
+    );
 
-	if (tasks.length === 0) {
-		return <EmptyBlock />;
-	}
+    if (tasks.length === 0) {
+        return <EmptyBlock />;
+    }
 
-	return (
-		<div className="task-list">
-			<ul className="task-list__items">
-				{tasks.map((task) => (
-					<li key={task.id} className="task-list__item">
-						<div className="task-list__content">
-							<label className="task-list__checkbox-label">
-								<input
-									type="checkbox"
-									className="task-list__checkbox"
-									checked={task.completed}
-									onChange={() =>
-										toggleTaskCompletion(task.id)
-									}
-								/>
-								<span className="task-list__custom-checkbox"></span>
-							</label>
+    return (
+        <div className="task-list">
+            <ul className="task-list__items">
+                {tasks.map((task) => (
+                    <li key={task.id} className="task-list__item">
+                        <div className="task-list__content">
+                            <label className="task-list__checkbox-label">
+                                <input
+                                    type="checkbox"
+                                    className="task-list__checkbox"
+                                    checked={task.completed}
+                                    onChange={() =>
+                                        toggleTaskCompletion(task.id)
+                                    }
+                                />
+                                <span className="task-list__custom-checkbox"></span>
+                            </label>
 
-							<div className="task-list__details">
-								<span
-									className={`task-list__text ${
-										task.completed
-											? "task-list__text--completed"
-											: ""
-									}`}
-								>
-									{task.text}
-								</span>
-							</div>
-						</div>
+                            <div className="task-list__details">
+                                <span
+                                    className={`task-list__text ${
+                                        task.completed
+                                            ? "task-list__text--completed"
+                                            : ""
+                                    }`}
+                                >
+                                    {task.text}
+                                </span>
+                            </div>
+                        </div>
 
-						<div className="task-list__actions">
-							<button
-								className="task-list__edit"
-								aria-label="Edit task"
-							>
-								<IconEdit />
-							</button>
+                        <div className="task-list__actions">
+                            <button
+                                className="task-list__edit"
+                                aria-label="Edit task"
+                            >
+                                <IconEdit />
+                            </button>
 
-							<button
-								className="task-list__delete"
-								aria-label="Delete task"
-							>
-								<IconDelete />
-							</button>
-						</div>
-					</li>
-				))}
-			</ul>
-		</div>
-	);
+                            <button
+                                className="task-list__delete"
+                                aria-label="Delete task"
+                            >
+                                <IconDelete />
+                            </button>
+                        </div>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 };
 
 export default TaskList;
