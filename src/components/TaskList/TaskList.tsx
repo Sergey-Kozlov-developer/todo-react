@@ -11,55 +11,63 @@ interface ITask {
     completed: boolean;
 }
 
+type ITaskList = Record<string, ITask>;
+
 const TaskList = () => {
-    const [tasks, setTasks] = useState<ITask[]>([
-        {
+    const [tasks, setTasks] = useState<ITask[]>([]);
+
+    const mockTaskList: ITaskList = {
+        abc: {
             id: "1",
             text: "Note #1",
             completed: false,
         },
-        {
+        cde: {
             id: "2",
             text: "Note #2",
             completed: true,
         },
-        {
+        fg: {
             id: "3",
             text: "Note #3",
             completed: false,
         },
-    ]);
+    };
 
-    const toggleTaskCompletion = useCallback(
-        (taskId: string) => {
-            setTasks(
-                tasks.map((task) =>
-                    task.id === taskId
-                        ? { ...task, completed: !task.completed }
-                        : task
-                )
-            );
-        },
-        [tasks]
-    );
+    // const toggleTaskCompletion = useCallback(
+    //     (taskId: string) => {
+    //         console.log(taskId);
 
-    if (tasks.length === 0) {
-        return <EmptyBlock />;
-    }
+    //         mockTaskList[taskId].completed = false;
+    //         // mockTaskList[taskId].completed = !mockTaskList[taskId].completed;
+    //     },
+    //     [tasks]
+    // );
+    const toggleTaskCompletion = (taskId: string) => {
+        console.log(taskId);
+
+        mockTaskList[taskId].completed = false;
+        // mockTaskList[taskId].completed = !mockTaskList[taskId].completed;
+    };
+
+    // if (tasks.length === 0) {
+    //     return <EmptyBlock />;
+    // }
+    console.log(Object.keys(mockTaskList));
 
     return (
         <div className="task-list">
             <ul className="task-list__items">
-                {tasks.map((task) => (
-                    <li key={task.id} className="task-list__item">
+                {Object.keys(mockTaskList).map((taskId) => (
+                    <li key={taskId} className="task-list__item">
                         <div className="task-list__content">
                             <label className="task-list__checkbox-label">
                                 <input
                                     type="checkbox"
                                     className="task-list__checkbox"
-                                    checked={task.completed}
+                                    checked={mockTaskList[taskId].completed}
                                     onChange={() =>
-                                        toggleTaskCompletion(task.id)
+                                        toggleTaskCompletion(taskId)
                                     }
                                 />
                                 <span className="task-list__custom-checkbox"></span>
@@ -68,12 +76,12 @@ const TaskList = () => {
                             <div className="task-list__details">
                                 <span
                                     className={`task-list__text ${
-                                        task.completed
+                                        mockTaskList[taskId].completed
                                             ? "task-list__text--completed"
                                             : ""
                                     }`}
                                 >
-                                    {task.text}
+                                    {mockTaskList[taskId].text}
                                 </span>
                             </div>
                         </div>
