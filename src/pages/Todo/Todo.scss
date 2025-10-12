@@ -9,9 +9,12 @@
 	}
 
 	&__form {
+
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+        gap: rem(20);
+
 	}
 	.add-task {
 		position: absolute;

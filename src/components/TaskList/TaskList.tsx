@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useReducer } from "react";
 import "./TaskList.scss";
 
 import IconDelete from "../Icon/IconDelete";
@@ -12,60 +12,68 @@ interface ITask {
 }
 
 type ITaskList = Record<string, ITask>;
+type Action = { type: "TOGGLE_TASK"; taskId: string } | {type: "DELETE_TASK"; taskId: string };
+
 
 const TaskList = () => {
-    const [tasks, setTasks] = useState<ITask[]>([]);
-
-    const mockTaskList: ITaskList = {
-        abc: {
+    // начальное состояние
+    const initialMockTaskList: ITaskList = {
+        one: {
             id: "1",
             text: "Note #1",
             completed: false,
         },
-        cde: {
+        two: {
             id: "2",
             text: "Note #2",
             completed: true,
         },
-        fg: {
+        three: {
             id: "3",
             text: "Note #3",
             completed: false,
         },
     };
+    // хук принимает в себя ф-цию состояния и начальное состояние
+    const [tasks, dispatch] = useReducer(taskReducer, initialMockTaskList);
 
-    // const toggleTaskCompletion = useCallback(
-    //     (taskId: string) => {
-    //         console.log(taskId);
+// ф-ция, которая меняет состояние задачи
+    function taskReducer(state: ITaskList, action: Action): ITaskList {
+        switch (action.type) {
+            case "TOGGLE_TASK":
+                return {
+                    ...state,
+                    [action.taskId]: {
+                        ...state[action.taskId],
+                        completed: !state[action.taskId].completed,
+                    },
+                };
 
-    //         mockTaskList[taskId].completed = false;
-    //         // mockTaskList[taskId].completed = !mockTaskList[taskId].completed;
-    //     },
-    //     [tasks]
-    // );
-    const toggleTaskCompletion = (taskId: string) => {
-        console.log(taskId);
+            default:
+                return state;
+        }
+    }
+    // ф-ция обрабатывает клик
+    const toggleTaskCompletion = useCallback((taskId: string) => {
+        dispatch({ type: "TOGGLE_TASK", taskId });
+    }, []);
 
-        mockTaskList[taskId].completed = false;
-        // mockTaskList[taskId].completed = !mockTaskList[taskId].completed;
-    };
 
-    // if (tasks.length === 0) {
-    //     return <EmptyBlock />;
-    // }
-    console.log(Object.keys(mockTaskList));
+    if (Object.keys(tasks).length === 0) {
+        return <EmptyBlock />;
+    }
 
     return (
         <div className="task-list">
             <ul className="task-list__items">
-                {Object.keys(mockTaskList).map((taskId) => (
+                {Object.keys(tasks).map((taskId) => (
                     <li key={taskId} className="task-list__item">
                         <div className="task-list__content">
                             <label className="task-list__checkbox-label">
                                 <input
                                     type="checkbox"
                                     className="task-list__checkbox"
-                                    checked={mockTaskList[taskId].completed}
+                                    checked={tasks[taskId].completed}
                                     onChange={() =>
                                         toggleTaskCompletion(taskId)
                                     }
@@ -76,12 +84,12 @@ const TaskList = () => {
                             <div className="task-list__details">
                                 <span
                                     className={`task-list__text ${
-                                        mockTaskList[taskId].completed
+                                        tasks[taskId].completed
                                             ? "task-list__text--completed"
                                             : ""
                                     }`}
                                 >
-                                    {mockTaskList[taskId].text}
+                                    {tasks[taskId].text}
                                 </span>
                             </div>
                         </div>
