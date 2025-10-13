@@ -1,9 +1,8 @@
 import { useCallback, useReducer } from "react";
 import "./TaskList.scss";
 
-import IconDelete from "../Icon/IconDelete";
-import IconEdit from "../Icon/IconEdit";
 import EmptyBlock from "../EmptyBlock/EmptyBlock.tsx";
+import TaskItem from "../TaskItem/TaskItem.tsx";
 
 interface ITask {
     id: string;
@@ -12,7 +11,9 @@ interface ITask {
 }
 
 type ITaskList = Record<string, ITask>;
-type Action = { type: "TOGGLE_TASK"; taskId: string } | {type: "DELETE_TASK"; taskId: string };
+type Action =
+    | { type: "TOGGLE_TASK"; taskId: string }
+    | { type: "DELETE_TASK"; taskId: string };
 
 // начальное состояние
 const initialMockTaskList: ITaskList = {
@@ -61,7 +62,6 @@ const TaskList = () => {
         dispatch({ type: "TOGGLE_TASK", taskId });
     }, []);
 
-
     if (Object.keys(state).length === 0) {
         return <EmptyBlock />;
     }
@@ -70,49 +70,13 @@ const TaskList = () => {
         <div className="task-list">
             <ul className="task-list__items">
                 {Object.keys(state).map((taskId) => (
-                    <li key={taskId} className="task-list__item">
-                        <div className="task-list__content">
-                            <label className="task-list__checkbox-label">
-                                <input
-                                    type="checkbox"
-                                    className="task-list__checkbox"
-                                    checked={state[taskId].completed}
-                                    onChange={() =>
-                                        toggleTaskCompletion(taskId)
-                                    }
-                                />
-                                <span className="task-list__custom-checkbox"></span>
-                            </label>
-
-                            <div className="task-list__details">
-                                <span
-                                    className={`task-list__text ${
-                                        state[taskId].completed
-                                            ? "task-list__text--completed"
-                                            : ""
-                                    }`}
-                                >
-                                    {state[taskId].text}
-                                </span>
-                            </div>
-                        </div>
-
-                        <div className="task-list__actions">
-                            <button
-                                className="task-list__edit"
-                                aria-label="Edit task"
-                            >
-                                <IconEdit />
-                            </button>
-
-                            <button
-                                className="task-list__delete"
-                                aria-label="Delete task"
-                            >
-                                <IconDelete />
-                            </button>
-                        </div>
-                    </li>
+                    <TaskItem
+                        taskId={taskId}
+                        isCheck={state[taskId].completed}
+                        toggleCompleted={() => toggleTaskCompletion(taskId)}
+                        completed={state[taskId].completed}
+                        text={state[taskId].text}
+                    />
                 ))}
             </ul>
         </div>
