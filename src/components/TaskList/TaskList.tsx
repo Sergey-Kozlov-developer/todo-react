@@ -13,7 +13,8 @@ interface ITask {
 type ITaskList = Record<string, ITask>;
 type Action =
     | { type: "TOGGLE_TASK"; taskId: string }
-    | { type: "DELETE_TASK"; taskId: string };
+    | { type: "DELETE_TASK"; taskId: string }
+    | { type: "EDIT_TASK"; taskId: string; newText: string };
 
 // начальное состояние
 const initialMockTaskList: ITaskList = {
@@ -48,6 +49,25 @@ function taskReducer(state: ITaskList, action: Action): ITaskList {
                     completed: !state[action.taskId].completed,
                 },
             };
+        case "DELETE_TASK": {
+            // записываем в переменную текущий state
+            const newState = { ...state };
+            /**
+             * удаляем из объекта initialMockTaskList id задачи!! - taskId
+             *  не путаем taskId(id самой задачи объекта initialMockTaskList )
+             * и id(это внутри объекта самой задачи)
+             */
+            delete newState[action.taskId];
+            return newState;
+        }
+        case "EDIT_TASK":
+            return {
+                ...state,
+                [action.taskId]: {
+                    ...state[action.newText],
+                    text: action.newText,
+                },
+            };
 
         default:
             return state;
@@ -57,9 +77,13 @@ function taskReducer(state: ITaskList, action: Action): ITaskList {
 const TaskList = () => {
     // хук принимает в себя ф-цию состояния и начальное состояние
     const [state, dispatch] = useReducer(taskReducer, initialMockTaskList);
-    // ф-ция обрабатывает клик
+    // ф-ция обрабатывает клик по checkbox
     const toggleTaskCompletion = useCallback((taskId: string) => {
         dispatch({ type: "TOGGLE_TASK", taskId });
+    }, []);
+    // ф-ция обрабатывает клик по иконки удаления
+    const handleClickDeleteTask = useCallback((taskId: string) => {
+        dispatch({ type: "DELETE_TASK", taskId });
     }, []);
 
     if (Object.keys(state).length === 0) {
@@ -71,11 +95,13 @@ const TaskList = () => {
             <ul className="task-list__items">
                 {Object.keys(state).map((taskId) => (
                     <TaskItem
+                        key={taskId}
                         taskId={taskId}
                         isCheck={state[taskId].completed}
                         toggleCompleted={() => toggleTaskCompletion(taskId)}
                         completed={state[taskId].completed}
                         text={state[taskId].text}
+                        deleteTask={() => handleClickDeleteTask(taskId)}
                     />
                 ))}
             </ul>

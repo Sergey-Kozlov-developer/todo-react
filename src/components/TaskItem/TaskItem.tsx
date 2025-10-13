@@ -5,6 +5,7 @@ interface ITaskItemProps {
     taskId: string;
     isCheck: boolean;
     toggleCompleted: (taskId: string) => void;
+    deleteTask: (taskId: string) => void;
     completed: boolean;
     text: string;
 }
@@ -12,12 +13,16 @@ interface ITaskItemProps {
 const TaskItem = ({
     isCheck,
     toggleCompleted,
+    deleteTask,
     taskId,
     completed,
     text,
 }: ITaskItemProps) => {
     const handleChange = () => {
         toggleCompleted(taskId);
+    };
+    const handleClickDelete = () => {
+        deleteTask(taskId);
     };
     return (
         <li className="task-list__item">
@@ -48,7 +53,11 @@ const TaskItem = ({
                     <IconEdit />
                 </button>
 
-                <button className="task-list__delete" aria-label="Delete task">
+                <button
+                    className="task-list__delete"
+                    aria-label="Delete task"
+                    onClick={handleClickDelete}
+                >
                     <IconDelete />
                 </button>
             </div>
