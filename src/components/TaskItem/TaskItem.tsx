@@ -94,7 +94,7 @@ const TaskItem = ({
             </div>
 
             {editingTask ? (
-                <>
+                <div className="task-list__actions">
                     <TaskButton
                         className="task-list__edit"
                         icon={<IconSave />}
@@ -105,9 +105,9 @@ const TaskItem = ({
                         icon={<IconCancel />}
                         onClickIcon={handleCanCelEdit}
                     />
-                </>
+                </div>
             ) : (
-                <>
+                <div className="task-list__actions">
                     <TaskButton
                         className="task-list__edit"
                         icon={<IconEdit />}
@@ -118,7 +118,7 @@ const TaskItem = ({
                         icon={<IconDelete />}
                         onClickIcon={handleClickDelete}
                     />
-                </>
+                </div>
             )}
         </li>
     );

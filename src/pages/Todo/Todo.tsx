@@ -1,11 +1,12 @@
 import { useState } from "react";
 
-import iconPlus from "../../assets/images/icon-plus.svg";
 import SearchField from "../../components/SearchField/SearchField.tsx";
 import Filter from "../../components/Filter/Filter.tsx";
 import ToggleTheme from "../../components/ToggleTheme/ToggleTheme.tsx";
 import AddTaskModal from "../../components/AddTaskModal/AddTaskModal.tsx";
 import TaskList from "../../components/TaskList/TaskList.tsx";
+import TaskButton from "../../components/TaskButton/TaskButton.tsx";
+import IconPlus from "../../components/Icon/IconPlus.tsx";
 
 const Todo = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,12 +20,11 @@ const Todo = () => {
             </form>
             <TaskList />
             <div className="todo add-task">
-                <button
+                <TaskButton
                     className="add-task__button"
-                    onClick={() => setIsModalOpen(true)}
-                >
-                    <img src={iconPlus} alt="Add task" />
-                </button>
+                    icon={<IconPlus />}
+                    onClickIcon={() => setIsModalOpen(true)}
+                />
             </div>
             {isModalOpen && (
                 <AddTaskModal
