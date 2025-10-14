@@ -1,0 +1,40 @@
+@use "../../styles/base/helpers" as *;
+@use "../../styles/base/variables" as *;
+.todo {
+	margin-top: rem(40);
+
+	&__title {
+		margin-bottom: rem(18);
+		text-align: center;
+	}
+
+	&__form {
+
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+        gap: rem(20);
+
+	}
+	.add-task {
+		position: absolute;
+		bottom: rem(32);
+		right: 30%;
+
+		&__button {
+			@include square(rem(50));
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border: none;
+			box-shadow: var(--shadow-light);
+			border-radius: rem(50);
+			background: var(--color-purple);
+			transition: all 0.3s ease;
+
+			&:hover {
+				background: var(--color-background);
+			}
+		}
+	}
+}

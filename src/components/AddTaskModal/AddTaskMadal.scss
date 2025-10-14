@@ -1,0 +1,80 @@
+@use "../../styles/base/helpers" as *;
+@use "../../styles/base/variables" as *;
+
+.modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(37, 37, 37, 0.7);
+	animation: fadeIn 0.2s ease;
+}
+.modal {
+	width: 100%;
+	max-width: rem(500);
+	padding: rem(18) rem(30);
+	background: var(--color-light);
+	border-radius: rem(16);
+
+	&__input {
+		width: 100%;
+		padding: rem(8) rem(16);
+		border: var(--border-light);
+		border-radius: rem(8);
+		font-size: rem(16);
+		transition: all 0.3s ease;
+		&:focus {
+			outline: none;
+			border-color: var(--color-purple);
+			// Градиентная тень
+			box-shadow: 0 0 0 rem(1) var(--color-purple),
+				0 rem(4) rem(12) rgba(124, 58, 237, 0.1);
+			transform: translateY(-1px);
+		}
+		&::placeholder {
+			font-family: var(--font-family-accent);
+			font-weight: 500;
+			color: var(--color-light-placeholder);
+		}
+	}
+
+	&__form {
+		padding-top: rem(25);
+		padding-bottom: rem(128);
+	}
+
+	&__actions {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	&__button {
+		display: inline-flex;
+		flex-direction: column;
+		align-items: center;
+		padding: rem(10) rem(25);
+		border: var(--border-light);
+		border-radius: rem(5);
+		color: var(--color-purple);
+		text-transform: uppercase;
+
+		&.color {
+			background: var(--color-purple);
+			color: var(--color-light);
+		}
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
