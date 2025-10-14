@@ -3,11 +3,12 @@ import IconDelete from "../Icon/IconDelete";
 import IconEdit from "../Icon/IconEdit";
 import IconSave from "../Icon/IconSave";
 import IconCancel from "../Icon/IconCancel";
+import TaskButton from "../TaskButton/TaskButton";
 // import AddTaskModal from "../AddTaskModal/AddTaskModal";
 
 interface ITaskItemProps {
     taskId: string;
-    isCheck: boolean;
+    // isCheck: boolean;
     toggleCompleted: (taskId: string) => void;
     deleteTask: (taskId: string) => void;
     editTask: (taskId: string, newText: string) => void;
@@ -16,7 +17,7 @@ interface ITaskItemProps {
 }
 
 const TaskItem = ({
-    isCheck,
+    // isCheck,
     toggleCompleted,
     deleteTask,
     editTask,
@@ -65,7 +66,7 @@ const TaskItem = ({
                     <input
                         type="checkbox"
                         className="task-list__checkbox"
-                        checked={isCheck}
+                        // checked={isCheck}
                         onChange={handleChange}
                     />
                     <span className="task-list__custom-checkbox"></span>
@@ -93,40 +94,31 @@ const TaskItem = ({
             </div>
 
             {editingTask ? (
-                <div className="task-list__actions">
-                    <button
-                        onClick={handleSaveEdit}
+                <>
+                    <TaskButton
                         className="task-list__edit"
-                        aria-label="Edit task"
-                    >
-                        <IconSave />
-                    </button>
-                    <button
-                        onClick={handleCanCelEdit}
+                        icon={<IconSave />}
+                        onClickIcon={handleSaveEdit}
+                    />
+                    <TaskButton
                         className="task-list__delete"
-                        aria-label="Delete task"
-                    >
-                        <IconCancel />
-                    </button>
-                </div>
+                        icon={<IconCancel />}
+                        onClickIcon={handleCanCelEdit}
+                    />
+                </>
             ) : (
-                <div className="task-list__actions">
-                    <button
+                <>
+                    <TaskButton
                         className="task-list__edit"
-                        aria-label="Edit task"
-                        onClick={handleStartEdit}
-                    >
-                        <IconEdit />
-                    </button>
-
-                    <button
+                        icon={<IconEdit />}
+                        onClickIcon={handleStartEdit}
+                    />
+                    <TaskButton
                         className="task-list__delete"
-                        aria-label="Delete task"
-                        onClick={handleClickDelete}
-                    >
-                        <IconDelete />
-                    </button>
-                </div>
+                        icon={<IconDelete />}
+                        onClickIcon={handleClickDelete}
+                    />
+                </>
             )}
         </li>
     );

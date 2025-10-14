@@ -7,9 +7,9 @@ const IconSave = () => {
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             stroke="#000000"
-            stroke-width="1"
-            stroke-linecap="round"
-            stroke-linejoin="miter"
+            strokeWidth="1"
+            strokeLinecap="round"
+            strokeLinejoin="miter"
         >
             <polygon points="17 2 2 2 2 22 7 22 7 13 17 13 17 22 22 22 22 7 17 2"></polygon>
             <line x1="7" y1="7" x2="15" y2="7"></line>

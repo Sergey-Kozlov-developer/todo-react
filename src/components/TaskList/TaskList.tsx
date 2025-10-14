@@ -26,7 +26,7 @@ const initialMockTaskList: ITaskList = {
     two: {
         id: "2",
         text: "Note #2",
-        completed: true,
+        completed: false,
     },
     three: {
         id: "3",
@@ -101,7 +101,7 @@ const TaskList = () => {
                     <TaskItem
                         key={taskId}
                         taskId={taskId}
-                        isCheck={state[taskId].completed}
+                        // isCheck={state[taskId].completed}
                         toggleCompleted={() => toggleTaskCompletion(taskId)}
                         completed={state[taskId].completed}
                         text={state[taskId].text}
