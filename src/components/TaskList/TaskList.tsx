@@ -85,6 +85,10 @@ const TaskList = () => {
     const handleClickDeleteTask = useCallback((taskId: string) => {
         dispatch({ type: "DELETE_TASK", taskId });
     }, []);
+    // редактирование задачи
+    const editTask = useCallback((taskId: string, newText: string) => {
+        dispatch({ type: "EDIT_TASK", taskId, newText });
+    }, []);
 
     if (Object.keys(state).length === 0) {
         return <EmptyBlock />;
@@ -102,6 +106,7 @@ const TaskList = () => {
                         completed={state[taskId].completed}
                         text={state[taskId].text}
                         deleteTask={() => handleClickDeleteTask(taskId)}
+                        editTask={editTask}
                     />
                 ))}
             </ul>
