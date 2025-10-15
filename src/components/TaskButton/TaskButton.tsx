@@ -8,7 +8,6 @@ interface ITaskButtonProps {
 
 const TaskButton = ({ icon, onClickIcon, className }: ITaskButtonProps) => {
     return (
-        // <div className="task-list__actions">
         <button
             onClick={onClickIcon}
             className={className}
@@ -16,7 +15,6 @@ const TaskButton = ({ icon, onClickIcon, className }: ITaskButtonProps) => {
         >
             {icon}
         </button>
-        // </div>
     );
 };
 
