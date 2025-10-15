@@ -22,6 +22,10 @@
             font-weight: 500;
             color: var(--color-light-placeholder);
         }
+
+        @include tablet {
+            width: rem(463);
+        }
     }
 
     &__button {

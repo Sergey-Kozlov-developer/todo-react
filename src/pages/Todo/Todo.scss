@@ -13,11 +13,18 @@
         align-items: center;
         justify-content: space-between;
         gap: rem(20);
+        @include tablet {
+            width: rem(563);
+            margin: 0 auto;
+        }
     }
     .add-task {
         position: absolute;
         bottom: rem(32);
         right: 30%;
+        @include tablet {
+            right: rem(20);
+        }
 
         &__button {
             @include square(rem(50));
