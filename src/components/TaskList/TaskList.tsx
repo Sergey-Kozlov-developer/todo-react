@@ -1,20 +1,26 @@
-import { useCallback, useReducer } from "react";
+import { useCallback, useReducer, useState } from "react";
 import "./TaskList.scss";
+import { v6 as uuidv6 } from "uuid";
 
 import EmptyBlock from "../EmptyBlock/EmptyBlock.tsx";
 import TaskItem from "../TaskItem/TaskItem.tsx";
+import AddTaskModal from "../AddTaskModal/AddTaskModal.tsx";
+import TaskButton from "../TaskButton/TaskButton.tsx";
+import IconPlus from "../Icon/IconPlus.tsx";
 
-interface ITask {
+export interface ITask {
     id: string;
     text: string;
     completed: boolean;
+    timestamp: Date;
 }
 
 type ITaskList = Record<string, ITask>;
 type Action =
     | { type: "TOGGLE_TASK"; taskId: string }
     | { type: "DELETE_TASK"; taskId: string }
-    | { type: "EDIT_TASK"; taskId: string; newText: string };
+    | { type: "EDIT_TASK"; taskId: string; newText: string }
+    | { type: "ADD_TASK"; task: ITask };
 
 // начальное состояние
 const initialMockTaskList: ITaskList = {
@@ -22,16 +28,19 @@ const initialMockTaskList: ITaskList = {
         id: "1",
         text: "Note #1",
         completed: false,
+        timestamp: new Date(),
     },
     two: {
         id: "2",
         text: "Note #2",
-        completed: false,
+        completed: true,
+        timestamp: new Date(),
     },
     three: {
         id: "3",
         text: "Note #3",
         completed: false,
+        timestamp: new Date(),
     },
 };
 
@@ -69,12 +78,29 @@ function taskReducer(state: ITaskList, action: Action): ITaskList {
                 },
             };
 
+        case "ADD_TASK": {
+            // устанавливаем уникальный id
+            const newTaskId = `task-${uuidv6()}`;
+
+            return {
+                ...state,
+                // создаем объект новой задачи
+                [newTaskId]: {
+                    id: action.task.id,
+                    text: action.task.text,
+                    completed: action.task.completed,
+                    timestamp: action.task.timestamp,
+                },
+            };
+        }
+
         default:
             return state;
     }
 }
 
 const TaskList = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
     // хук принимает в себя ф-цию состояния и начальное состояние
     const [state, dispatch] = useReducer(taskReducer, initialMockTaskList);
     // ф-ция обрабатывает клик по checkbox
@@ -90,27 +116,47 @@ const TaskList = () => {
         dispatch({ type: "EDIT_TASK", taskId, newText });
     }, []);
 
+    // добавление задачи
+    const addTask = useCallback((task: ITask) => {
+        dispatch({ type: "ADD_TASK", task });
+    }, []);
+
     if (Object.keys(state).length === 0) {
         return <EmptyBlock />;
     }
 
     return (
-        <div className="task-list">
-            <ul className="task-list__items">
-                {Object.keys(state).map((taskId) => (
-                    <TaskItem
-                        key={taskId}
-                        taskId={taskId}
-                        // isCheck={state[taskId].completed}
-                        toggleCompleted={() => toggleTaskCompletion(taskId)}
-                        completed={state[taskId].completed}
-                        text={state[taskId].text}
-                        deleteTask={() => handleClickDeleteTask(taskId)}
-                        editTask={editTask}
-                    />
-                ))}
-            </ul>
-        </div>
+        <>
+            <div className="task-list">
+                <ul className="task-list__items">
+                    {Object.keys(state).map((taskId) => (
+                        <TaskItem
+                            key={taskId}
+                            taskId={taskId}
+                            isCheck={state[taskId].completed}
+                            toggleCompleted={() => toggleTaskCompletion(taskId)}
+                            completed={state[taskId].completed}
+                            text={state[taskId].text}
+                            deleteTask={() => handleClickDeleteTask(taskId)}
+                            editTask={editTask}
+                        />
+                    ))}
+                </ul>
+            </div>
+            <div className="todo add-task">
+                <TaskButton
+                    className="add-task__button"
+                    icon={<IconPlus />}
+                    onClickIcon={() => setIsModalOpen(true)}
+                />
+            </div>
+            {isModalOpen && (
+                <AddTaskModal
+                    onClose={() => setIsModalOpen(false)}
+                    addTask={addTask}
+                />
+            )}
+        </>
     );
 };
 

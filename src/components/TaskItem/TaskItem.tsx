@@ -8,7 +8,7 @@ import TaskButton from "../TaskButton/TaskButton";
 
 interface ITaskItemProps {
     taskId: string;
-    // isCheck: boolean;
+    isCheck: boolean;
     toggleCompleted: (taskId: string) => void;
     deleteTask: (taskId: string) => void;
     editTask: (taskId: string, newText: string) => void;
@@ -17,7 +17,7 @@ interface ITaskItemProps {
 }
 
 const TaskItem = ({
-    // isCheck,
+    isCheck,
     toggleCompleted,
     deleteTask,
     editTask,
@@ -48,7 +48,7 @@ const TaskItem = ({
         setEditingTask(false);
     };
     // отмена сохранения
-    const handleCanCelEdit = () => {
+    const handleCancelEdit = () => {
         setEditText("");
         setEditingTask(false);
     };
@@ -66,7 +66,7 @@ const TaskItem = ({
                     <input
                         type="checkbox"
                         className="task-list__checkbox"
-                        // checked={isCheck}
+                        checked={isCheck}
                         onChange={handleChange}
                     />
                     <span className="task-list__custom-checkbox"></span>
@@ -103,7 +103,7 @@ const TaskItem = ({
                     <TaskButton
                         className="task-list__delete"
                         icon={<IconCancel />}
-                        onClickIcon={handleCanCelEdit}
+                        onClickIcon={handleCancelEdit}
                     />
                 </div>
             ) : (
