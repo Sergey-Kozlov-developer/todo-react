@@ -27,7 +27,6 @@ const AddTaskModal = ({ onClose, addTask }: AddTaskModalProps) => {
                 completed: false,
                 timestamp: new Date(),
             };
-            console.log(newTask.id);
 
             addTask(newTask);
             setInputText("");

@@ -107,7 +107,7 @@ const TaskList = () => {
     const toggleTaskCompletion = useCallback((taskId: string) => {
         dispatch({ type: "TOGGLE_TASK", taskId });
     }, []);
-    // ф-ция обрабатывает клик по иконки удаления
+    // ф-ция обрабатывает клик по иконке удаления
     const handleClickDeleteTask = useCallback((taskId: string) => {
         dispatch({ type: "DELETE_TASK", taskId });
     }, []);
