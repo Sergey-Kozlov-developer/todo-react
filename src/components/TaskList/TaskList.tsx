@@ -7,6 +7,7 @@ import TaskItem from "../TaskItem/TaskItem.tsx";
 import AddTaskModal from "../AddTaskModal/AddTaskModal.tsx";
 import TaskButton from "../TaskButton/TaskButton.tsx";
 import IconPlus from "../Icon/IconPlus.tsx";
+// import { SearchContext } from "../../App.tsx";
 
 export interface ITask {
     id: string;
@@ -103,6 +104,8 @@ const TaskList = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     // хук принимает в себя ф-цию состояния и начальное состояние
     const [state, dispatch] = useReducer(taskReducer, initialMockTaskList);
+    // вытаскиваем SearchContext
+    // const { searchValue } = useContext(SearchContext);
     // ф-ция обрабатывает клик по checkbox
     const toggleTaskCompletion = useCallback((taskId: string) => {
         dispatch({ type: "TOGGLE_TASK", taskId });
@@ -120,6 +123,11 @@ const TaskList = () => {
     const addTask = useCallback((task: ITask) => {
         dispatch({ type: "ADD_TASK", task });
     }, []);
+
+    // фильтруем объект с задачами
+    // const filteredTasks = Object.keys(state).filter((taskId) => {
+    //     state[taskId].text.toLowerCase().includes(searchValue.toLowerCase());
+    // });
 
     if (Object.keys(state).length === 0) {
         return <EmptyBlock />;
