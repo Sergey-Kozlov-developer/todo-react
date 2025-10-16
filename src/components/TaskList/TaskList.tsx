@@ -7,7 +7,8 @@ import TaskItem from "../TaskItem/TaskItem.tsx";
 import AddTaskModal from "../AddTaskModal/AddTaskModal.tsx";
 import TaskButton from "../TaskButton/TaskButton.tsx";
 import IconPlus from "../Icon/IconPlus.tsx";
-import { useSearchState } from "../../context/useSearchState.tsx";
+import { useTaskFilterState } from "../../context/useTaskFilterState.tsx";
+import { FilterListEnum } from "../../enums/filterListEnum.ts";
 
 export interface ITask {
     id: string;
@@ -102,18 +103,23 @@ function taskReducer(state: ITaskList, action: Action): ITaskList {
 
 const TaskList = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+
     // хук принимает в себя ф-цию состояния и начальное состояние
     const [state, dispatch] = useReducer(taskReducer, initialMockTaskList);
-    // вытаскиваем searchQuery из нашего хука контекста
-    const { searchQuery } = useSearchState();
+
+    // вытаскиваем searchQuery и sortType из нашего хука контекста
+    const { searchQuery, filterType } = useTaskFilterState();
+
     // ф-ция обрабатывает клик по checkbox
     const toggleTaskCompletion = useCallback((taskId: string) => {
         dispatch({ type: "TOGGLE_TASK", taskId });
     }, []);
+
     // ф-ция обрабатывает клик по иконке удаления
     const handleClickDeleteTask = useCallback((taskId: string) => {
         dispatch({ type: "DELETE_TASK", taskId });
     }, []);
+
     // редактирование задачи
     const editTask = useCallback((taskId: string, newText: string) => {
         dispatch({ type: "EDIT_TASK", taskId, newText });
@@ -124,11 +130,25 @@ const TaskList = () => {
         dispatch({ type: "ADD_TASK", task });
     }, []);
 
-    // фильтруем объект с задачами по значению text
-    const filteredTasks = Object.keys(state).filter((taskId) => {
+    // поиск объект с задачами по значению text
+    const searchedTasks = Object.keys(state).filter((taskId) => {
         return state[taskId].text
             .toLowerCase()
             .includes(searchQuery.toLowerCase());
+    });
+
+    // фильтрация по ALL, Complete, Incomplete
+    const filteredTasks = searchedTasks.filter((taskId) => {
+        const task = state[taskId];
+        switch (filterType) {
+            case FilterListEnum.COMPLETE:
+                return task.completed;
+            case FilterListEnum.INCOMPLETE:
+                return !task.completed;
+            case FilterListEnum.ALL:
+            default:
+                return true;
+        }
     });
 
     if (filteredTasks.length === 0) {

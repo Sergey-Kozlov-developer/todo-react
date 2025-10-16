@@ -1,20 +1,28 @@
 import { useCallback, useState } from "react";
 import "./Filter.scss";
 import IconSelect from "../Icon/IconSelect";
-import { SortListEnum } from "../../enums/sortListEnum";
+import { FilterListEnum } from "../../enums/filterListEnum";
 import FilterList from "../FilterList/FilterList";
+import { useTaskFilterState } from "../../context/useTaskFilterState";
+// import debounce from 'lodash.debounce';
 
 const Filter = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedItem, setSelectedItem] = useState(SortListEnum.ALL);
+    // вытаскиваем из нашего хука useSearchState
+    const { filterType, setFilterType } = useTaskFilterState();
 
     // получаем массив значений из enum
-    const list = Object.values(SortListEnum);
+    const list = Object.values(FilterListEnum);
 
-    const handleSelect = useCallback((item: SortListEnum) => {
-        setSelectedItem(item);
-        setIsOpen(false);
-    }, []);
+    // const debounceFilter = debounce(())
+
+    const handleSelect = useCallback(
+        (item: FilterListEnum) => {
+            setFilterType(item);
+            setIsOpen(false);
+        },
+        [setFilterType]
+    );
 
     return (
         <div className="select">
@@ -23,7 +31,7 @@ const Filter = () => {
                 onClick={() => setIsOpen(!isOpen)}
                 type="button"
             >
-                <span className="select__value">{selectedItem}</span>
+                <span className="select__value">{filterType}</span>
                 <span
                     className={`select__icon ${
                         isOpen ? "select__icon--rotated" : ""
@@ -38,7 +46,7 @@ const Filter = () => {
                         <FilterList
                             key={item}
                             item={item}
-                            isSelected={selectedItem === item}
+                            isSelected={filterType === item}
                             onSelect={() => handleSelect(item)}
                         />
                     ))}

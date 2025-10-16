@@ -1,11 +1,11 @@
 import Todo from "./pages/Todo/Todo.tsx";
-import { SearchStateProvider } from "./context/useSearchState.tsx";
+import { FilterStateProvider } from "./context/useTaskFilterState.tsx";
 
 function App() {
     return (
-        <SearchStateProvider>
+        <FilterStateProvider>
             <Todo />
-        </SearchStateProvider>
+        </FilterStateProvider>
     );
 }
 

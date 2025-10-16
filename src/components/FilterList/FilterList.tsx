@@ -1,9 +1,9 @@
-import type { SortListEnum } from "../../enums/sortListEnum";
+import type { FilterListEnum } from "../../enums/filterListEnum";
 
 interface FilterListProps {
-    item: SortListEnum;
+    item: FilterListEnum;
     isSelected: boolean;
-    onSelect: (item: SortListEnum) => void;
+    onSelect: (item: FilterListEnum) => void;
 }
 
 const FilterList = ({ item, isSelected, onSelect }: FilterListProps) => {
