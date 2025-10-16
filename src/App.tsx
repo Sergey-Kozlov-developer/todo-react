@@ -1,22 +1,11 @@
-import { createContext, useState } from "react";
 import Todo from "./pages/Todo/Todo.tsx";
-
-interface ISearchContext {
-    searchValue: string;
-    setSearchValue: (query: string) => void;
-}
-
-export const SearchContext = createContext<ISearchContext>({
-    searchValue: "",
-    setSearchValue: () => {},
-});
+import { SearchStateProvider } from "./context/useSearchState.tsx";
 
 function App() {
-    const [searchValue, setSearchValue] = useState("");
     return (
-        <SearchContext.Provider value={{ searchValue, setSearchValue }}>
+        <SearchStateProvider>
             <Todo />
-        </SearchContext.Provider>
+        </SearchStateProvider>
     );
 }
 

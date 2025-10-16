@@ -7,7 +7,7 @@ import TaskItem from "../TaskItem/TaskItem.tsx";
 import AddTaskModal from "../AddTaskModal/AddTaskModal.tsx";
 import TaskButton from "../TaskButton/TaskButton.tsx";
 import IconPlus from "../Icon/IconPlus.tsx";
-// import { SearchContext } from "../../App.tsx";
+import { useSearchState } from "../../context/useSearchState.tsx";
 
 export interface ITask {
     id: string;
@@ -104,8 +104,8 @@ const TaskList = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     // хук принимает в себя ф-цию состояния и начальное состояние
     const [state, dispatch] = useReducer(taskReducer, initialMockTaskList);
-    // вытаскиваем SearchContext
-    // const { searchValue } = useContext(SearchContext);
+    // вытаскиваем searchQuery из нашего хука контекста
+    const { searchQuery } = useSearchState();
     // ф-ция обрабатывает клик по checkbox
     const toggleTaskCompletion = useCallback((taskId: string) => {
         dispatch({ type: "TOGGLE_TASK", taskId });
@@ -124,12 +124,14 @@ const TaskList = () => {
         dispatch({ type: "ADD_TASK", task });
     }, []);
 
-    // фильтруем объект с задачами
-    // const filteredTasks = Object.keys(state).filter((taskId) => {
-    //     state[taskId].text.toLowerCase().includes(searchValue.toLowerCase());
-    // });
+    // фильтруем объект с задачами по значению text
+    const filteredTasks = Object.keys(state).filter((taskId) => {
+        return state[taskId].text
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase());
+    });
 
-    if (Object.keys(state).length === 0) {
+    if (filteredTasks.length === 0) {
         return <EmptyBlock />;
     }
 
@@ -137,7 +139,7 @@ const TaskList = () => {
         <>
             <div className="task-list">
                 <ul className="task-list__items">
-                    {Object.keys(state).map((taskId) => (
+                    {filteredTasks.map((taskId) => (
                         <TaskItem
                             key={taskId}
                             taskId={taskId}
