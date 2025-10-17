@@ -8,6 +8,7 @@
         "build": "tsc -b && vite build",
         "lint": "eslint --debug src/",
         "lint:write": "eslint --debug src/ --fix",
+        "prettier": "prettier --write src/**/*.tsx",
         "preview": "vite preview"
     },
     "lint-staged": {
@@ -22,6 +23,9 @@
         }
     },
     "dependencies": {
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.1",
+        "@mui/material": "^7.3.4",
         "husky": "^9.1.7",
         "lint-staged": "^16.2.4",
         "prettier": "^3.6.2",

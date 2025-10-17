@@ -1,6 +1,7 @@
 import type React from "react";
 import { useState } from "react";
 import type { ITask } from "../TaskList/TaskList";
+import TaskButton from "../TaskButton/TaskButton";
 
 interface AddTaskModalProps {
     onClose: () => void;
@@ -50,20 +51,17 @@ const AddTaskModal = ({ onClose, addTask }: AddTaskModalProps) => {
                     />
                 </form>
                 <div className="modal__actions">
-                    <button
-                        type="button"
-                        onClick={onClose}
+                    <TaskButton
+                        icon={undefined}
+                        onClickIcon={onClose}
                         className="modal__button"
-                    >
-                        cancel
-                    </button>
-                    <button
-                        type="button"
+                        text="cancel"
+                    />
+                    <TaskButton
+                        onClickIcon={handleSubmit}
                         className="modal__button color"
-                        onClick={handleSubmit}
-                    >
-                        apply
-                    </button>
+                        text="apply"
+                    />
                 </div>
             </div>
         </div>

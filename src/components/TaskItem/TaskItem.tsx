@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import IconDelete from "../Icon/IconDelete";
 import IconEdit from "../Icon/IconEdit";
 import IconSave from "../Icon/IconSave";
@@ -25,39 +25,39 @@ const TaskItem = ({
     completed,
     text,
 }: ITaskItemProps) => {
-    const [editingTask, setEditingTask] = useState(false);
+    const [isEditedTask, setIsEditedTask] = useState(false);
     const [editText, setEditText] = useState("");
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const handleChange = () => {
+    const handleChange = useCallback(() => {
         toggleCompleted(taskId);
-    };
-    const handleClickDelete = () => {
+    }, []);
+    const handleClickDelete = useCallback(() => {
         deleteTask(taskId);
-    };
+    }, []);
     // при клике ставим текущий текст
-    const handleStartEdit = () => {
+    const handleStartEdit = useCallback(() => {
         setEditText(text);
-        setEditingTask(true);
-    };
+        setIsEditedTask(true);
+    }, []);
     // сохранение текста задачи
-    const handleSaveEdit = () => {
+    const handleSaveEdit = useCallback(() => {
         if (editText.trim() !== "") {
             editTask(taskId, editText.trim());
         }
-        setEditingTask(false);
-    };
+        setIsEditedTask(false);
+    }, [editText]);
     // отмена сохранения
-    const handleCancelEdit = () => {
+    const handleCancelEdit = useCallback(() => {
         setEditText("");
-        setEditingTask(false);
-    };
+        setIsEditedTask(false);
+    }, []);
     // делаем фокус на input при редактировании
     useEffect(() => {
-        if (editingTask && inputRef.current) {
-            inputRef.current.focus();
+        if (isEditedTask) {
+            inputRef.current?.focus();
         }
-    }, [editingTask]);
+    }, [isEditedTask]);
 
     return (
         <li className="task-list__item">
@@ -72,7 +72,7 @@ const TaskItem = ({
                     <span className="task-list__custom-checkbox"></span>
                 </label>
                 <div className="task-list__details">
-                    {editingTask ? (
+                    {isEditedTask ? (
                         <input
                             ref={inputRef}
                             value={editText}
@@ -93,7 +93,7 @@ const TaskItem = ({
                 </div>
             </div>
 
-            {editingTask ? (
+            {isEditedTask ? (
                 <div className="task-list__actions">
                     <TaskButton
                         className="task-list__edit"
