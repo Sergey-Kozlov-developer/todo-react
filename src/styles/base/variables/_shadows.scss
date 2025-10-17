@@ -1,7 +1,8 @@
 @use "../helpers" as *;
 
 :root {
-	--shadow: 0 0 0 #{rem(3)} #191919;
-	--shadow-light: 0 0 #{rem(4)} 0 var(--color-purple);
-	--shadow-hover: 0 0 #{rem(4)} 0 var(--color-purple);
+    --shadow: 0 0 0 #{rem(3)} #191919;
+    --shadow-light: 0 0 #{rem(4)} 0 var(--color-purple);
+    --shadow-dark: 0 0 #{rem(4)} 0 var(--color-light);
+    --shadow-hover: 0 0 #{rem(4)} 0 var(--color-purple);
 }

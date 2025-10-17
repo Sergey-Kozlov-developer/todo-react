@@ -9,4 +9,6 @@
 @use "../components/AddTaskModal/AddTaskMadal.scss";
 @use "../components/EmptyBlock/EmptyBlock.scss";
 
+@use "./base/dark-theme";
+
 @use "../pages/Todo/Todo.scss";

@@ -1,0 +1,93 @@
+@use "helpers" as *;
+
+.dark-theme {
+    background-color: var(--color-dark);
+    h1,
+    h3 {
+        color: var(--color-light);
+    }
+
+    .search-task {
+        &__input {
+            background-color: var(--color-dark);
+            border: var(--border-dark);
+            color: var(--color-light);
+            &:focus {
+                outline: none;
+                border-color: var(--color-light);
+                box-shadow: var(--shadow-dark);
+                transform: translateY(-1px);
+            }
+            &::placeholder {
+                font-family: var(--font-family-accent);
+                font-weight: 500;
+                color: var(--color-dark-placeholder);
+            }
+        }
+
+        &__button {
+            color: var(--color-light);
+        }
+    }
+
+    .task-list {
+        &__text {
+            color: var(--color-light);
+
+            &--completed {
+                text-decoration: line-through;
+                color: var(--color-dark-placeholder);
+            }
+        }
+    }
+
+    .modal {
+        background-color: var(--color-dark);
+        border: var(--border-dark);
+
+        &__title {
+            color: var(--color-light);
+        }
+
+        &__input {
+            border: var(--border-dark);
+            background: var(--color-dark);
+            color: var(--color-light);
+
+            &:focus {
+                outline: none;
+                border-color: var(--color-light);
+                // Градиентная тень
+                box-shadow:
+                    0 0 0 rem(1) var(--color-light),
+                    0 rem(4) rem(12) rgba(255, 255, 255, 0.4);
+                transform: translateY(-1px);
+            }
+            &::placeholder {
+                color: var(--color-dark-placeholder);
+            }
+        }
+
+        &__button {
+            border: var(--border-light);
+
+            color: var(--color-purple);
+            background: var(--color-dark);
+            &:hover {
+                background: var(--color-dark);
+                color: var(--color-light);
+            }
+
+            &.color {
+                border: none;
+                background: var(--color-purple);
+                color: var(--color-light);
+                transition: all 0.3s ease;
+                &:hover {
+                    background: var(--color-light-placeholder);
+                    color: var(--color-purple);
+                }
+            }
+        }
+    }
+}
