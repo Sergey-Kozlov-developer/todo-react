@@ -2,154 +2,154 @@
 @use "../../styles/base/variables" as *;
 
 .task-list {
-	width: rem(520);
-	padding: rem(24);
-	margin-top: rem(24);
-	margin: 0 auto;
+    width: rem(520);
+    padding: rem(24);
+    margin-top: rem(24);
+    margin: 0 auto;
 
-	&__items {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-	}
+    &__items {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
 
-	&__item {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: rem(16) 0;
-		border-bottom: var(--border-light);
-		position: relative;
+    &__item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: rem(16) 0;
+        border-bottom: var(--border-light);
+        position: relative;
 
-		&:last-child {
-			border-bottom: none;
-		}
+        &:last-child {
+            border-bottom: none;
+        }
 
-		&:hover {
-			.task-list__actions {
-				opacity: 1;
-				visibility: visible;
-				transform: translateX(0);
-			}
-		}
-	}
+        &:hover {
+            .task-list__actions {
+                opacity: 1;
+                visibility: visible;
+                transform: translateX(0);
+            }
+        }
+    }
 
-	&__content {
-		display: flex;
-		align-items: center;
-		gap: rem(17);
-		flex: 1;
-	}
-	&__checkbox-label {
-		display: flex;
-		align-items: center;
-		cursor: pointer;
-		position: relative;
-		flex-shrink: 0;
-		margin-top: rem(2);
-	}
+    &__content {
+        display: flex;
+        align-items: center;
+        gap: rem(17);
+        flex: 1;
+    }
+    &__checkbox-label {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+        flex-shrink: 0;
+        margin-top: rem(2);
+    }
 
-	&__checkbox {
-		// Скрываем нативный чекбокс
-		position: absolute;
-		opacity: 0;
-		width: 0;
-		height: 0;
+    &__checkbox {
+        // Скрываем нативный чекбокс
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
 
-		// Стили для состояния checked
-		&:checked + .task-list__custom-checkbox {
-			background: var(--color-purple);
-			border-color: var(--color-purple);
+        // Стили для состояния checked
+        &:checked + .task-list__custom-checkbox {
+            background: var(--color-purple);
+            border-color: var(--color-purple);
 
-			&::after {
-				opacity: 1;
-			}
-		}
-	}
+            &::after {
+                opacity: 1;
+            }
+        }
+    }
 
-	&__custom-checkbox {
-		@include square(rem(26));
-		border: var(--border-light);
-		border-radius: rem(2);
-		background: transparent;
-		transition: all 0.2s ease;
-		position: relative;
+    &__custom-checkbox {
+        @include square(rem(26));
+        border: var(--border-light);
+        border-radius: rem(2);
+        background: transparent;
+        transition: all 0.2s ease;
+        position: relative;
 
-		&::after {
-			content: "";
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			width: 60%;
-			height: 60%;
-			background: var(--color-light);
-			mask: url("../../assets/images/icon-check.svg") no-repeat center;
-			mask-size: contain;
-			opacity: 0;
-			transition: opacity 0.2s ease;
-		}
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            height: 60%;
+            background: var(--color-light);
+            mask: url("../../assets/images/icon-check.svg") no-repeat center;
+            mask-size: contain;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
 
-		&:hover {
-			border-color: var(--color-purple);
-		}
-	}
+        &:hover {
+            border-color: var(--color-purple);
+        }
+    }
 
-	&__details {
-		display: flex;
-		flex-direction: column;
-		gap: rem(4);
-		flex: 1;
-	}
+    &__details {
+        display: flex;
+        flex-direction: column;
+        gap: rem(4);
+        flex: 1;
+    }
 
-	&__text {
-		font-family: var(--font-family-base);
-		font-size: rem(20);
-		color: var(--color-light-text);
-		text-transform: uppercase;
-		&--completed {
-			text-decoration: line-through;
-			color: var(--color-done-task);
-		}
-	}
+    &__text {
+        font-family: var(--font-family-base);
+        font-size: rem(20);
+        color: var(--color-light-text);
+        text-transform: uppercase;
+        &--completed {
+            text-decoration: line-through;
+            color: var(--color-done-task);
+        }
+    }
 
-	&__actions {
-		display: flex;
-		gap: rem(8);
-		opacity: 0;
-		visibility: hidden;
-		transform: translateX(-10px);
-		transition: all 0.3s ease;
-	}
+    &__actions {
+        display: flex;
+        gap: rem(8);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(-10px);
+        transition: all 0.3s ease;
+    }
 
-	&__edit,
-	&__delete {
-		background: none;
-		border: none;
-		color: var(--color-done-task);
-		cursor: pointer;
-		padding: 0 rem(8);
-		border-radius: rem(4);
-		transition: all 0.2s ease;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: rem(10);
-		@include square(18);
-	}
-	// не работает при наведении
-	&__edit:hover {
-		color: var(--color-purple);
+    &__edit,
+    &__delete {
+        background: none;
+        border: none;
+        color: var(--color-done-task);
+        cursor: pointer;
+        padding: 0 rem(8);
+        border-radius: rem(4);
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: rem(10);
+        @include square(18);
+    }
 
-		svg {
-			stroke: var(--color-purple);
-		}
-	}
-	&__delete:hover {
-		color: var(--color-trash);
+    &__edit:hover {
+        color: var(--color-purple);
 
-		svg {
-			stroke: var(--color-trash);
-		}
-	}
+        svg {
+            stroke: var(--color-purple);
+        }
+    }
+    &__delete:hover {
+        color: var(--color-trash);
+
+        svg {
+            stroke: var(--color-trash);
+        }
+    }
 }

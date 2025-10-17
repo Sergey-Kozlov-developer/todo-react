@@ -39,6 +39,10 @@
                 color: var(--color-dark-placeholder);
             }
         }
+        &__edit,
+        &__delete {
+            color: var(--color-light);
+        }
     }
 
     .modal {
