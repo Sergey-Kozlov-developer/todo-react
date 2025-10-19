@@ -1,8 +1,8 @@
 // import type React from "react";
 import { useState } from "react";
-import type { ITask } from "../TaskList/TaskList";
 import TaskButton from "../TaskButton/TaskButton";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
+import type { ITask } from "../../hook/useReducerHook";
 interface AddTaskModalProps {
     onClose: () => void;
     addTask: (task: ITask) => void;
