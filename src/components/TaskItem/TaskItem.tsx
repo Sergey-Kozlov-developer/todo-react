@@ -1,10 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import IconDelete from "../Icon/IconDelete";
-import IconEdit from "../Icon/IconEdit";
-import IconSave from "../Icon/IconSave";
-import IconCancel from "../Icon/IconCancel";
-import TaskButton from "../TaskButton/TaskButton";
-// import AddTaskModal from "../AddTaskModal/AddTaskModal";
+
+import TaskItemEditing from "./TaskItemEditing";
+import TaskItemStable from "./TaskItemStable";
 
 interface ITaskItemProps {
     taskId: string;
@@ -71,55 +68,23 @@ const TaskItem = ({
                     />
                     <span className="task-list__custom-checkbox"></span>
                 </label>
-                <div className="task-list__details">
-                    {isEditedTask ? (
-                        <input
-                            ref={inputRef}
-                            value={editText}
-                            onChange={(e) => setEditText(e.target.value)}
-                            type="text"
-                            name="Edit"
-                            placeholder="Edit text"
-                        />
-                    ) : (
-                        <span
-                            className={`task-list__text ${
-                                completed ? "task-list__text--completed" : ""
-                            }`}
-                        >
-                            {text}
-                        </span>
-                    )}
-                </div>
+                {isEditedTask ? (
+                    <TaskItemEditing
+                        onClickSave={handleSaveEdit}
+                        onClickCancel={handleCancelEdit}
+                        onChangeText={(e) => setEditText(e.target.value)}
+                        editText={editText}
+                        inputRef={inputRef}
+                    />
+                ) : (
+                    <TaskItemStable
+                        text={text}
+                        onClickEdit={handleStartEdit}
+                        onClickDelete={handleClickDelete}
+                        completed={completed}
+                    />
+                )}
             </div>
-
-            {isEditedTask ? (
-                <div className="task-list__actions">
-                    <TaskButton
-                        className="task-list__edit"
-                        icon={<IconSave />}
-                        onClickIcon={handleSaveEdit}
-                    />
-                    <TaskButton
-                        className="task-list__delete"
-                        icon={<IconCancel />}
-                        onClickIcon={handleCancelEdit}
-                    />
-                </div>
-            ) : (
-                <div className="task-list__actions">
-                    <TaskButton
-                        className="task-list__edit"
-                        icon={<IconEdit />}
-                        onClickIcon={handleStartEdit}
-                    />
-                    <TaskButton
-                        className="task-list__delete"
-                        icon={<IconDelete />}
-                        onClickIcon={handleClickDelete}
-                    />
-                </div>
-            )}
         </li>
     );
 };
