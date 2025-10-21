@@ -1,4 +1,5 @@
 import Todo from "./pages/Todo/Todo.tsx";
+
 import { FilterStateProvider } from "./context/useTaskFilterState.tsx";
 
 function App() {
@@ -8,5 +9,4 @@ function App() {
         </FilterStateProvider>
     );
 }
-
 export default App;
