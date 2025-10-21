@@ -1,8 +1,10 @@
 // import type React from "react";
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import TaskButton from "../TaskButton/TaskButton";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import type { ITask } from "../../hook/useReducerHook";
+import throttle from "lodash.throttle";
+
 interface AddTaskModalProps {
     onClose: () => void;
     addTask: (task: ITask) => void;
@@ -33,6 +35,21 @@ const AddTaskModal = ({ onClose, addTask }: AddTaskModalProps) => {
         }
     };
 
+    /**
+     * создаем throttleInput и в него прокидываем throttle
+     * throttle ф-ция задается с промежутком времени, который гарантирует, что
+     * за заданное время она вызовется только 1 раз
+     */
+    const throttleInput = useRef(throttle((value) => setInputText(value), 250));
+
+    const handleChangeInput = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            const value = event.target.value;
+            throttleInput.current(value);
+        },
+        []
+    );
+
     return (
         <div className="modal-overlay">
             <ClickAwayListener onClickAway={handleClickAway}>
@@ -46,7 +63,7 @@ const AddTaskModal = ({ onClose, addTask }: AddTaskModalProps) => {
                             placeholder="Input your note..."
                             autoComplete="off"
                             value={inputText}
-                            onChange={(e) => setInputText(e.target.value)}
+                            onChange={handleChangeInput}
                         />
                     </form>
                     <div className="modal__actions">
