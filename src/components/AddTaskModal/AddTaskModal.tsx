@@ -1,9 +1,8 @@
 // import type React from "react";
-import { useCallback, useRef, useState } from "react";
 import TaskButton from "../TaskButton/TaskButton";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import type { ITask } from "../../hook/useReducerHook";
-import throttle from "lodash.throttle";
+import { useThrottleHook } from "../../hook/useThrottleHook";
 
 interface AddTaskModalProps {
     onClose: () => void;
@@ -11,7 +10,7 @@ interface AddTaskModalProps {
 }
 
 const AddTaskModal = ({ onClose, addTask }: AddTaskModalProps) => {
-    const [inputText, setInputText] = useState("");
+    const { inputText, setInputText, handleChangeInput } = useThrottleHook();
     // клик вне окна
     const handleClickAway = () => {
         onClose();
@@ -34,21 +33,6 @@ const AddTaskModal = ({ onClose, addTask }: AddTaskModalProps) => {
             onClose();
         }
     };
-
-    /**
-     * создаем throttleInput и в него прокидываем throttle
-     * throttle ф-ция задается с промежутком времени, который гарантирует, что
-     * за заданное время она вызовется только 1 раз
-     */
-    const throttleInput = useRef(throttle((value) => setInputText(value), 250));
-
-    const handleChangeInput = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>) => {
-            const value = event.target.value;
-            throttleInput.current(value);
-        },
-        []
-    );
 
     return (
         <div className="modal-overlay">
