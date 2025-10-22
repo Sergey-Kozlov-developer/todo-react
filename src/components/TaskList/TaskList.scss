@@ -139,7 +139,6 @@
         @include square(18);
     }
 
-    // не работает при наведении
     &__edit:hover {
         color: var(--color-purple);
 

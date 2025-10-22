@@ -2,7 +2,7 @@ import IconSearch from "../Icon/IconSearch";
 import "./SearchField.scss";
 
 import { useTaskFilterState } from "../../context/useTaskFilterState";
-import debounce from "lodash.debounce";
+import { debounce } from "es-toolkit/function";
 import { useRef } from "react";
 
 const SearchField = () => {

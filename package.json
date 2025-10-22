@@ -26,6 +26,7 @@
         "@emotion/react": "^11.14.0",
         "@emotion/styled": "^11.14.1",
         "@mui/material": "^7.3.4",
+        "es-toolkit": "^1.40.0",
         "husky": "^9.1.7",
         "lint-staged": "^16.2.4",
         "lodash.debounce": "^4.0.8",
@@ -38,8 +39,6 @@
     },
     "devDependencies": {
         "@eslint/js": "^9.36.0",
-        "@types/lodash.debounce": "^4.0.9",
-        "@types/lodash.throttle": "^4.1.9",
         "@types/node": "^24.6.0",
         "@types/react": "^19.1.16",
         "@types/react-dom": "^19.1.9",

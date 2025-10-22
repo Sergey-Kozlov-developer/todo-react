@@ -1,4 +1,4 @@
-import throttle from "lodash.throttle";
+import { throttle } from "es-toolkit/function";
 import { useCallback, useRef, useState } from "react";
 
 export const useThrottleHook = () => {

@@ -2,19 +2,11 @@ import SearchField from "../../components/SearchField/SearchField.tsx";
 import Filter from "../../components/Filter/Filter.tsx";
 import ToggleTheme from "../../components/ToggleTheme/ToggleTheme.tsx";
 import TaskList from "../../components/TaskList/TaskList.tsx";
-import { useTaskFilterState } from "../../context/useTaskFilterState.tsx";
-import { useEffect } from "react";
+import { useThemeState } from "../../context/useThemeState.tsx";
 
 const Todo = () => {
-    const { theme } = useTaskFilterState();
+    const { theme } = useThemeState();
 
-    useEffect(() => {
-        if (theme === "dark") {
-            document.body.classList.add("dark-theme");
-        } else {
-            document.body.classList.remove("dark-theme");
-        }
-    }, [theme]);
     return (
         <div className={`todo container ${theme}-theme`}>
             <h1 className="todo__title">TODO LIST</h1>

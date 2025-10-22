@@ -1,9 +1,9 @@
 import toggleIconTheme from "../../assets/images/icon-theme.svg";
 import iconLight from "../../assets/images/icon-light.svg";
-import { useTaskFilterState } from "../../context/useTaskFilterState";
+import { useThemeState } from "../../context/useThemeState";
 
 const ToggleTheme = () => {
-    const { toggleTheme, theme } = useTaskFilterState();
+    const { toggleTheme, theme } = useThemeState();
     return (
         <div className="theme-toggle">
             <button

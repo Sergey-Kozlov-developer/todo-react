@@ -1,5 +1,7 @@
 import { useCallback, useReducer } from "react";
 import { v6 as uuidv6 } from "uuid";
+import { FilterListEnum } from "../enums/filterListEnum";
+import { useTaskFilterState } from "../context/useTaskFilterState";
 
 export interface ITask {
     id: string;
@@ -96,6 +98,8 @@ export const useTaskReducer = (
     initialState: ITaskList = initialMockTaskList
 ) => {
     const [state, dispatch] = useReducer(taskReducer, initialState);
+    // получение состояния поиска и фильтрации из хука useTaskFilterState()
+    const { searchQuery, filterType } = useTaskFilterState();
     // ф-ция обрабатывает клик по checkbox
     const toggleTaskCompletion = useCallback((taskId: string) => {
         dispatch({ type: "TOGGLE_TASK", taskId });
@@ -114,8 +118,30 @@ export const useTaskReducer = (
         dispatch({ type: "ADD_TASK", task });
     }, []);
 
+    // поиск по задачам
+    const searchedTasks = Object.keys(state).filter((taskId) => {
+        return state[taskId].text
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase());
+    });
+
+    // фильтрация по ALL, Complete, Incomplete
+    const filteredTasks = searchedTasks.filter((taskId) => {
+        const taskFilter = state[taskId];
+        switch (filterType) {
+            case FilterListEnum.COMPLETE:
+                return taskFilter.completed;
+            case FilterListEnum.INCOMPLETE:
+                return !taskFilter.completed;
+            case FilterListEnum.ALL:
+            default:
+                return true;
+        }
+    });
+
     return {
         task: state,
+        filteredTasks,
         toggleTaskCompletion,
         handleClickDeleteTask,
         editTask,

@@ -4,7 +4,6 @@ import IconSelect from "../Icon/IconSelect";
 import { FilterListEnum } from "../../enums/filterListEnum";
 import FilterList from "../FilterList/FilterList";
 import { useTaskFilterState } from "../../context/useTaskFilterState";
-// import debounce from 'lodash.debounce';
 
 const Filter = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -13,8 +12,6 @@ const Filter = () => {
 
     // получаем массив значений из enum
     const list = Object.values(FilterListEnum);
-
-    // const debounceFilter = debounce(())
 
     const handleSelect = useCallback(
         (item: FilterListEnum) => {
