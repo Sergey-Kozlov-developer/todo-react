@@ -1,7 +1,7 @@
 // import type React from "react";
 import TaskButton from "../TaskButton/TaskButton";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
-import type { ITask } from "../../hook/useReducerHook";
+import type { ITask } from "../../hook/useTaskReducer";
 import { useThrottleHook } from "../../hook/useThrottleHook";
 
 interface AddTaskModalProps {

@@ -6,7 +6,7 @@ import AddTaskModal from "../AddTaskModal/AddTaskModal.tsx";
 import TaskButton from "../TaskButton/TaskButton.tsx";
 import IconPlus from "../Icon/IconPlus.tsx";
 
-import { useTaskReducer } from "../../hook/useReducerHook.ts";
+import { useTaskReducer } from "../../hook/useTaskReducer.ts";
 
 const TaskList = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
