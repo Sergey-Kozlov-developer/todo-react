@@ -1,15 +1,19 @@
 export class ApiService {
     static apiUrl = import.meta.env.VITE_APP_REMOTE_SERVER;
 
-    static async getTodoList() {
-        return await fetch(this.apiUrl)
-            .then((res) => res.json())
-            .then((data) => {
-                const todos = data;
-                console.log(todos);
+    static async getTodoList(): Promise<[]> {
+        try {
+            const response = await fetch(this.apiUrl);
 
-                return todos;
-            });
+            if (!response.ok) {
+                throw new Error(`Ошибка подключения к API: ${response.status}`);
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error("Ошибка при получении todos ", error);
+            throw error;
+        }
     }
 
     // DELETE

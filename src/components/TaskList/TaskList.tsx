@@ -7,7 +7,6 @@ import TaskButton from "../TaskButton/TaskButton.tsx";
 import IconPlus from "../Icon/IconPlus.tsx";
 
 import { useTaskReducer } from "../../hook/useTaskReducer.ts";
-import { ApiService } from "../../api/apiService.ts";
 
 const TaskList = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,8 +23,6 @@ const TaskList = () => {
     if (filteredTasks.length === 0) {
         return <EmptyBlock />;
     }
-    const data = ApiService.getTodoList();
-    console.log(data);
 
     return (
         <>
