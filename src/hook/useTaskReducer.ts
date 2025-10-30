@@ -4,8 +4,8 @@ import { FilterListEnum } from "../enums/filterListEnum";
 import { useTaskFilterState } from "../context/useTaskFilterState";
 
 export interface ITask {
-    id: string;
-    text: string;
+    id: number;
+    todo: string;
     completed: boolean;
     timestamp: Date;
 }
@@ -15,25 +15,26 @@ type Action =
     | { type: "TOGGLE_TASK"; taskId: string }
     | { type: "DELETE_TASK"; taskId: string }
     | { type: "EDIT_TASK"; taskId: string; newText: string }
-    | { type: "ADD_TASK"; task: ITask };
+    | { type: "ADD_TASK"; task: ITask }
+    | { type: "SET_TASKS"; tasks: ITaskList };
 
 // начальное состояние
 const initialMockTaskList: ITaskList = {
     one: {
-        id: "1",
-        text: "Note #1",
+        id: 1,
+        todo: "Note #1",
         completed: false,
         timestamp: new Date(),
     },
     two: {
-        id: "2",
-        text: "Note #2",
+        id: 2,
+        todo: "Note #2",
         completed: true,
         timestamp: new Date(),
     },
     three: {
-        id: "3",
-        text: "Note #3",
+        id: 3,
+        todo: "Note #3",
         completed: false,
         timestamp: new Date(),
     },
@@ -42,6 +43,8 @@ const initialMockTaskList: ITaskList = {
 // ф-ция, которая меняет состояние задачи
 function taskReducer(state: ITaskList, action: Action): ITaskList {
     switch (action.type) {
+        case "SET_TASKS":
+            return action.tasks;
         case "TOGGLE_TASK":
             // создаем новый объект
             // возвращаем новое состояние на основе предыдущего
@@ -69,7 +72,7 @@ function taskReducer(state: ITaskList, action: Action): ITaskList {
                 ...state,
                 [action.taskId]: {
                     ...state[action.newText],
-                    text: action.newText,
+                    todo: action.newText,
                 },
             };
 
@@ -82,7 +85,7 @@ function taskReducer(state: ITaskList, action: Action): ITaskList {
                 // создаем объект новой задачи
                 [newTaskId]: {
                     id: action.task.id,
-                    text: action.task.text,
+                    todo: action.task.todo,
                     completed: action.task.completed,
                     timestamp: action.task.timestamp,
                 },
@@ -100,6 +103,10 @@ export const useTaskReducer = (
     const [state, dispatch] = useReducer(taskReducer, initialState);
     // получение состояния поиска и фильтрации из хука useTaskFilterState()
     const { searchQuery, filterType } = useTaskFilterState();
+    //получение задач с API
+    const setTasks = useCallback((tasks: ITaskList) => {
+        dispatch({ type: "SET_TASKS", tasks });
+    }, []);
     // ф-ция обрабатывает клик по checkbox
     const toggleTaskCompletion = useCallback((taskId: string) => {
         dispatch({ type: "TOGGLE_TASK", taskId });
@@ -120,7 +127,7 @@ export const useTaskReducer = (
 
     // поиск по задачам
     const searchedTasks = Object.keys(state).filter((taskId) => {
-        return state[taskId].text
+        return state[taskId].todo
             .toLowerCase()
             .includes(searchQuery.toLowerCase());
     });
@@ -146,5 +153,6 @@ export const useTaskReducer = (
         handleClickDeleteTask,
         editTask,
         addTask,
+        setTasks,
     };
 };

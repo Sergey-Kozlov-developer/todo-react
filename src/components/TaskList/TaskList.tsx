@@ -35,7 +35,7 @@ const TaskList = () => {
                             isCheck={task[taskId].completed}
                             toggleCompleted={() => toggleTaskCompletion(taskId)}
                             completed={task[taskId].completed}
-                            text={task[taskId].text}
+                            text={task[taskId].todo}
                             deleteTask={() => handleClickDeleteTask(taskId)}
                             editTask={editTask}
                         />

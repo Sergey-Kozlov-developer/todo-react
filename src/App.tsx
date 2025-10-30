@@ -2,32 +2,38 @@ import Todo from "./pages/Todo/Todo.tsx";
 
 import { FilterStateProvider } from "./context/useTaskFilterState.tsx";
 import { ThemeStateProvider } from "./context/useThemeState.tsx";
-import { useEffect, useState } from "react";
+import { TaskProvider } from "./context/useTaskState.tsx";
+import { useCallback, useEffect } from "react";
 import { ApiService } from "./api/apiService.ts";
+import { useTaskReducer } from "./hook/useTaskReducer.ts";
 
 function App() {
-    const [data, setData] = useState<[]>([]);
+    const { setTasks } = useTaskReducer();
+    // получаем данные с API
+    const refreshTasks = useCallback(async () => {
+        try {
+            const apiData = await ApiService.getTodoList();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await ApiService.getTodoList();
-                console.log(data);
+            console.log("apiData", apiData);
 
-                setData(response);
-            } catch (error) {
-                console.error("Failed to fetch todos:", error);
-                throw error;
-            }
-        };
-        fetchData();
+            setTasks(apiData);
+        } catch (error) {
+            console.error("Failed to fetch todos:", error);
+            throw error;
+        }
     }, []);
+    // вызываем при загрузки страницы
+    useEffect(() => {
+        refreshTasks();
+    }, [refreshTasks]);
 
     return (
         <ThemeStateProvider>
-            <FilterStateProvider>
-                <Todo />
-            </FilterStateProvider>
+            <TaskProvider>
+                <FilterStateProvider>
+                    <Todo />
+                </FilterStateProvider>
+            </TaskProvider>
         </ThemeStateProvider>
     );
 }

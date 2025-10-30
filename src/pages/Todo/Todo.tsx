@@ -3,6 +3,7 @@ import Filter from "../../components/Filter/Filter.tsx";
 import ToggleTheme from "../../components/ToggleTheme/ToggleTheme.tsx";
 import TaskList from "../../components/TaskList/TaskList.tsx";
 import { useThemeState } from "../../context/useThemeState.tsx";
+import PaginationComponent from "../../components/pagination/Pagination.tsx";
 
 const Todo = () => {
     const { theme } = useThemeState();
@@ -16,6 +17,7 @@ const Todo = () => {
                 <ToggleTheme />
             </form>
             <TaskList />
+            <PaginationComponent />
         </div>
     );
 };
