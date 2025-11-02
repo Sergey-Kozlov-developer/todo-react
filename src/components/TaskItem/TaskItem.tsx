@@ -4,11 +4,11 @@ import TaskItemEditing from "./TaskItemEditing";
 import TaskItemStable from "./TaskItemStable";
 
 interface ITaskItemProps {
-    taskId: string;
+    taskId: number;
     isCheck: boolean;
-    toggleCompleted: (taskId: string) => void;
-    deleteTask: (taskId: string) => void;
-    editTask: (taskId: string, newText: string) => void;
+    toggleCompleted: (taskId: number) => void;
+    deleteTask: (taskId: number) => void;
+    editTask: (taskId: number, todo: string) => void;
     completed: boolean;
     text: string;
 }
@@ -27,7 +27,9 @@ const TaskItem = ({
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleChange = useCallback(() => {
-        toggleCompleted(taskId);
+        console.log(111);
+
+        // toggleCompleted(taskId);
     }, []);
     const handleClickDelete = useCallback(() => {
         deleteTask(taskId);
