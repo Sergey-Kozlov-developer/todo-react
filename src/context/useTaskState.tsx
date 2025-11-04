@@ -7,7 +7,7 @@ import {
     type PropsWithChildren,
 } from "react";
 // import { useTaskFilterState } from "./useTaskFilterState";
-import { v6 as uuidv6 } from "uuid";
+// import { v6 as uuidv6 } from "uuid";
 import { ApiService } from "../api/apiService";
 
 export const useTaskState = () => useContext(TaskContext);
@@ -50,47 +50,26 @@ function taskReducer(state: ITask[], action: Action): ITask[] {
         case "SET_TASKS":
             return action.tasks;
         case "TOGGLE_TASK":
-            // создаем новый объект
-            // возвращаем новое состояние на основе предыдущего
-            // при dispatch определенного action
             return state.map((task) =>
                 task.id === action.taskId
                     ? { ...task, completed: !task.completed }
                     : task
             );
         case "DELETE_TASK": {
-            // записываем в переменную текущий state
-            const newState = { ...state };
-            /**
-             * удаляем из объекта initialMockTaskList id задачи!! - taskId
-             *  не путаем taskId(id самой задачи объекта initialMockTaskList )
-             * и id(это внутри объекта самой задачи)
-             */
-            delete newState[action.taskId];
-            return newState;
+            return state.filter((task) => task.id !== action.taskId);
         }
         case "EDIT_TASK":
-            return {
-                ...state,
-                [action.taskId]: {
-                    ...state[action.taskId],
-                    todo: action.todo,
-                },
-            };
+            return state.map((task) =>
+                task.id === action.taskId
+                    ? { ...task, todo: action.todo }
+                    : task
+            );
 
         case "ADD_TASK": {
             // устанавливаем уникальный id
-            const newTaskId = `task-${uuidv6()}`;
+            // const newTaskId = `task-${uuidv6()}`;
 
-            return {
-                ...state,
-                // создаем объект новой задачи
-                [newTaskId]: {
-                    id: action.task.id,
-                    todo: action.task.todo,
-                    completed: action.task.completed,
-                },
-            };
+            return [...state, action.task];
         }
 
         default:
@@ -126,6 +105,7 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
     // добавление задачи
     const addTask = useCallback((task: ITask) => {
         dispatch({ type: "ADD_TASK", task });
+        console.log(task);
     }, []);
     // const setAllTask = (tasks: ITask[])
 

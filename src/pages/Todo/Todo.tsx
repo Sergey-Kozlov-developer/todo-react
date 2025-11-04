@@ -17,7 +17,7 @@ const Todo = () => {
         try {
             const apiData = await ApiService.getTodoList();
 
-            console.log("apiData", apiData);
+            // console.log("apiData", apiData);
 
             setTasks(apiData);
         } catch (error) {
