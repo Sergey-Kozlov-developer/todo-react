@@ -32,11 +32,7 @@ const TaskList = () => {
                             key={task.id}
                             taskId={task.id}
                             isCheck={task.completed}
-                            toggleCompleted={
-                                () => console.log(111)
-
-                                // toggleTaskCompletion(task.id)
-                            }
+                            toggleCompleted={() => toggleTaskCompletion(task)}
                             completed={task.completed}
                             text={task.todo}
                             deleteTask={() => handleClickDeleteTask(task.id)}

@@ -8,6 +8,7 @@ import {
 } from "react";
 // import { useTaskFilterState } from "./useTaskFilterState";
 import { v6 as uuidv6 } from "uuid";
+import { ApiService } from "../api/apiService";
 
 export const useTaskState = () => useContext(TaskContext);
 
@@ -52,13 +53,11 @@ function taskReducer(state: ITask[], action: Action): ITask[] {
             // создаем новый объект
             // возвращаем новое состояние на основе предыдущего
             // при dispatch определенного action
-            return {
-                ...state, // текущий state
-                [action.taskId]: {
-                    ...state[action.taskId],
-                    completed: !state[action.taskId].completed,
-                },
-            };
+            return state.map((task) =>
+                task.id === action.taskId
+                    ? { ...task, completed: !task.completed }
+                    : task
+            );
         case "DELETE_TASK": {
             // записываем в переменную текущий state
             const newState = { ...state };
@@ -108,8 +107,12 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
         dispatch({ type: "SET_TASKS", tasks });
     }, []);
     // ф-ция обрабатывает клик по checkbox
-    const toggleTaskCompletion = useCallback((taskId: number) => {
-        dispatch({ type: "TOGGLE_TASK", taskId });
+    const toggleTaskCompletion = useCallback(async (task: ITask) => {
+        try {
+            const updateTask = await ApiService.update(task);
+            dispatch({ type: "TOGGLE_TASK", taskId: task.id });
+            return updateTask;
+        } catch (error) {}
     }, []);
     // ф-ция обрабатывает клик по иконке удаления
     const handleClickDeleteTask = useCallback((taskId: number) => {

@@ -27,9 +27,7 @@ const TaskItem = ({
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleChange = useCallback(() => {
-        console.log(111);
-
-        // toggleCompleted(taskId);
+        toggleCompleted(taskId);
     }, []);
     const handleClickDelete = useCallback(() => {
         deleteTask(taskId);
