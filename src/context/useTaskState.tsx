@@ -3,12 +3,15 @@ import {
     createContext,
     useCallback,
     useContext,
+    useMemo,
     useReducer,
     type PropsWithChildren,
 } from "react";
 // import { useTaskFilterState } from "./useTaskFilterState";
 // import { v6 as uuidv6 } from "uuid";
 import { ApiService } from "../api/apiService";
+import { FilterListEnum } from "../enums/filterListEnum";
+import { useTaskFilterState } from "./useTaskFilterState";
 
 export const useTaskState = () => useContext(TaskContext);
 
@@ -21,7 +24,7 @@ export interface ITask {
 
 interface ITaskContextType {
     taskState: ITask[];
-    filteredTasks: string[];
+    filteredTasks: ITask[];
     toggleTaskCompletion: (taskId: number) => void;
     handleClickDeleteTask: (taskId: number) => void;
     editTask: (taskId: number, todo: string) => void;
@@ -80,7 +83,7 @@ function taskReducer(state: ITask[], action: Action): ITask[] {
 export const TaskProvider = ({ children }: PropsWithChildren) => {
     const [state, dispatch] = useReducer(taskReducer, []);
     // получение состояния поиска и фильтрации из хука useTaskFilterState()
-    // const { searchQuery, filterType } = useTaskFilterState();
+    const { searchQuery, filterType } = useTaskFilterState();
     //получение задач с API
     const setTasks = useCallback((tasks: ITask[]) => {
         dispatch({ type: "SET_TASKS", tasks });
@@ -107,11 +110,51 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
         dispatch({ type: "ADD_TASK", task });
         console.log(task);
     }, []);
-    // const setAllTask = (tasks: ITask[])
+
+    /** !! Поиск и фильтрация */
+    const filteredTasks = useMemo(() => {
+        // Сначала фильтруем по поисковому запросу
+        const searchedTasks = state.filter((task) =>
+            task.todo.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+
+        // Затем фильтруем по типу фильтра
+        switch (filterType) {
+            case FilterListEnum.COMPLETE:
+                return searchedTasks.filter((task) => task.completed);
+            case FilterListEnum.INCOMPLETE:
+                return searchedTasks.filter((task) => !task.completed);
+            case FilterListEnum.ALL:
+            default:
+                return searchedTasks;
+        }
+    }, [state, searchQuery, filterType]);
+    /**
+     // поиск по задачам
+    const searchedTasks = Object.keys(state).filter((taskId) => {
+        return state[taskId].text
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase());
+    });
+
+    // фильтрация по ALL, Complete, Incomplete
+    const filteredTasks = searchedTasks.filter((taskId) => {
+        const taskFilter = state[taskId];
+        switch (filterType) {
+            case FilterListEnum.COMPLETE:
+                return taskFilter.completed;
+            case FilterListEnum.INCOMPLETE:
+                return !taskFilter.completed;
+            case FilterListEnum.ALL:
+            default:
+                return true;
+        }
+    });
+     */
 
     const value: ITaskContextType = {
         taskState: state,
-        filteredTasks: [],
+        filteredTasks,
         toggleTaskCompletion,
         handleClickDeleteTask,
         editTask,

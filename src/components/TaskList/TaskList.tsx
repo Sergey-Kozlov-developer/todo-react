@@ -27,7 +27,7 @@ const TaskList = () => {
         <>
             <div className="task-list">
                 <ul className="task-list__items">
-                    {taskState.map((task) => (
+                    {filteredTasks.map((task) => (
                         <TaskItem
                             key={task.id}
                             taskId={task.id}
