@@ -23,13 +23,14 @@ export class ApiService {
     // для пагинации
     static async getTotalTasks() {
         try {
-            const response = await fetch(this.apiUrl);
+            const response = await fetch(`${this.apiUrl}`);
 
             if (!response.ok) {
                 throw new Error(
                     `Ошибка получения страниц из API: ${response.status}`
                 );
             }
+
             const pageApi = await response.json();
 
             return pageApi;
