@@ -5,7 +5,7 @@ export class ApiService {
     // получение задач
     static async getTodoList(): Promise<ITask[]> {
         try {
-            const response = await fetch(this.apiUrl);
+            const response = await fetch(`${this.apiUrl}`);
 
             if (!response.ok) {
                 throw new Error(`Ошибка подключения к API: ${response.status}`);

@@ -6,14 +6,14 @@ import { useCallback, useEffect, useState } from "react";
 interface PaginationComponentProps {
     onPageChange?: (page: number) => void;
     currentPage?: number;
+    itemsPerPage?: number;
 }
 
 const PaginationComponent = ({
     onPageChange,
-    currentPage = 1,
+    currentPage,
 }: PaginationComponentProps) => {
     const [totalPages, setTotalPages] = useState<number>(0);
-
     const pageTasks = useCallback(async () => {
         const pageData = await ApiService.getTotalTasks();
         // API Получаем кол-во задач, сколько выводится на страницу
