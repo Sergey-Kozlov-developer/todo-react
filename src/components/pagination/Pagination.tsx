@@ -19,7 +19,8 @@ const PaginationComponent = ({
         // API Получаем кол-во задач, сколько выводится на страницу
         // считаем сколько всего страниц отображать в пагинации
         const totalItems = pageData.total; // 254
-        const itemsPerPage = pageData.limit; // 30
+        const itemsPerPage = pageData.limit; // 6
+        // кол-во страниц в пагинации
         const calculatedTotalPages = Math.ceil(totalItems / itemsPerPage);
 
         console.log("totalItems", totalItems);
