@@ -7,8 +7,6 @@ import {
     useReducer,
     type PropsWithChildren,
 } from "react";
-// import { useTaskFilterState } from "./useTaskFilterState";
-// import { v6 as uuidv6 } from "uuid";
 import { ApiService } from "../api/apiService";
 import { FilterListEnum } from "../enums/filterListEnum";
 import { useTaskFilterState } from "./useTaskFilterState";
@@ -20,6 +18,7 @@ export interface ITask {
     todo: string;
     completed: boolean;
     userId: number;
+    isTemp?: boolean; // блокировка checkbox новой задачи
 }
 
 interface ITaskContextType {
@@ -69,9 +68,6 @@ function taskReducer(state: ITask[], action: Action): ITask[] {
             );
 
         case "ADD_TASK": {
-            // устанавливаем уникальный id
-            // const newTaskId = `task-${uuidv6()}`;
-
             return [...state, action.task];
         }
 

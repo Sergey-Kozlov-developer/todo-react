@@ -37,6 +37,7 @@ const TaskList = () => {
                             text={task.todo}
                             deleteTask={() => handleClickDeleteTask(task.id)}
                             editTask={editTask}
+                            isTemp={task.isTemp}
                         />
                     ))}
                 </ul>

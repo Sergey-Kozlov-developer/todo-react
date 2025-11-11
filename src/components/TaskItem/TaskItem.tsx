@@ -11,6 +11,7 @@ interface ITaskItemProps {
     editTask: (taskId: number, todo: string) => void;
     completed: boolean;
     text: string;
+    isTemp?: boolean;
 }
 
 const TaskItem = ({
@@ -21,12 +22,18 @@ const TaskItem = ({
     taskId,
     completed,
     text,
+    isTemp = false,
 }: ITaskItemProps) => {
     const [isEditedTask, setIsEditedTask] = useState(false);
     const [editText, setEditText] = useState("");
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleChange = useCallback(() => {
+        // задача имеет isTemp, то блокируем чекбокс
+        if (isTemp) {
+            console.log("Чекбокс заблокирован");
+            return;
+        }
         toggleCompleted(taskId);
     }, []);
     const handleClickDelete = useCallback(() => {
@@ -65,8 +72,11 @@ const TaskItem = ({
                         className="task-list__checkbox"
                         checked={isCheck}
                         onChange={handleChange}
+                        disabled={isTemp}
                     />
-                    <span className="task-list__custom-checkbox"></span>
+                    <span
+                        className={`task-list__custom-checkbox ${isTemp ? "task-item-temp" : ""}`}
+                    ></span>
                 </label>
                 {isEditedTask ? (
                     <TaskItemEditing

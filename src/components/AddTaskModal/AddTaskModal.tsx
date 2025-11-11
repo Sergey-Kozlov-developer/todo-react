@@ -25,7 +25,8 @@ const AddTaskModal = ({ onClose, addTask }: AddTaskModalProps) => {
                 id: Date.now(),
                 todo: inputText.toString(),
                 completed: false,
-                userId: new Date(),
+                userId: 1,
+                isTemp: true,
             };
 
             addTask(newTask);
