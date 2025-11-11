@@ -111,7 +111,7 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
         console.log(task);
     }, []);
 
-    /** !! Поиск и фильтрация */
+    /** !! Поиск и фильтрация, с данным API не работают */
     const filteredTasks = useMemo(() => {
         // Сначала фильтруем по поисковому запросу
         const searchedTasks = state.filter((task) =>
@@ -129,28 +129,6 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
                 return searchedTasks;
         }
     }, [state, searchQuery, filterType]);
-    /**
-     // поиск по задачам
-    const searchedTasks = Object.keys(state).filter((taskId) => {
-        return state[taskId].text
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase());
-    });
-
-    // фильтрация по ALL, Complete, Incomplete
-    const filteredTasks = searchedTasks.filter((taskId) => {
-        const taskFilter = state[taskId];
-        switch (filterType) {
-            case FilterListEnum.COMPLETE:
-                return taskFilter.completed;
-            case FilterListEnum.INCOMPLETE:
-                return !taskFilter.completed;
-            case FilterListEnum.ALL:
-            default:
-                return true;
-        }
-    });
-     */
 
     const value: ITaskContextType = {
         taskState: state,

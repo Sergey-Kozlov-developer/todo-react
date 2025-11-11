@@ -2,28 +2,21 @@ import type { ITask } from "../context/useTaskState";
 
 export class ApiService {
     static apiUrl = import.meta.env.VITE_APP_REMOTE_SERVER;
-    // получение задач
-    static async getTodoList(): Promise<ITask[]> {
-        try {
-            const response = await fetch(`${this.apiUrl}`);
-
-            if (!response.ok) {
-                throw new Error(`Ошибка подключения к API: ${response.status}`);
-            }
-            // сохраняем ответ сервера
-            const dataApi = await response.json();
-
-            return dataApi.todos;
-        } catch (error) {
-            console.error("Ошибка при получении todos ", error);
-            throw error;
+    // метод проверки API на массив объектов
+    static getApiUrl() {
+        // Если это массив, берем первый элемент или возвращаем дефолтный URL
+        if (Array.isArray(this.apiUrl)) {
+            console.warn("apiUrl is array, using default URL");
+            return this.apiUrl;
         }
+        return this.apiUrl;
     }
 
-    // для пагинации
+    // для пагинации и получении всех todo
     static async getTotalTasks() {
         try {
-            const response = await fetch(`${this.apiUrl}`);
+            const url = this.apiUrl;
+            const response = await fetch(url);
 
             if (!response.ok) {
                 throw new Error(
@@ -35,7 +28,7 @@ export class ApiService {
 
             return pageApi;
         } catch (error) {
-            console.error("Ошибка при получении pages ", error);
+            console.error("Ошибка при получении страниц ", error);
         }
     }
 

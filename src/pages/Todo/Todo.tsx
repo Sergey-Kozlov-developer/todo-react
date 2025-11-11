@@ -13,27 +13,50 @@ const Todo = () => {
     const { setTasks } = useTaskState();
     const [currentPage, setCurrentPage] = useState(1);
 
-    // получаем данные с API
-    const refreshTasks = useCallback(async () => {
-        try {
-            const apiData = await ApiService.getTodoList();
-            setTasks(apiData);
-        } catch (error) {
-            console.error("Failed to fetch todos:", error);
-            throw error;
-        }
-    }, [setTasks]);
-    // клик по кнопкам навигации
-    const handlePageChange = useCallback((page: number) => {
-        console.log(page);
+    const itemsPerPage = 8;
 
-        setCurrentPage(page);
-    }, []);
+    // получаем данные с API
+    const refreshTasks = useCallback(
+        async (page: number = 1) => {
+            try {
+                const skip = (page - 1) * itemsPerPage;
+                const baseUrl = await ApiService.getApiUrl();
+                const url = `${baseUrl}?limit=${itemsPerPage}&skip=${skip}`;
+
+                console.log("Запрос к API:", url);
+
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(
+                        `Ошибка подключения к API: ${response.status}`
+                    );
+                }
+
+                const dataApi = await response.json();
+                console.log("Получены задачи страницы", page, ":", dataApi);
+
+                setTasks(dataApi.todos || []);
+            } catch (error) {
+                console.error("Failed to fetch todos:", error);
+                throw error;
+            }
+        },
+        [setTasks, itemsPerPage]
+    );
+    // клик по кнопкам навигации
+    const handlePageChange = useCallback(
+        (page: number) => {
+            console.log("Переход на страницу:", page);
+            setCurrentPage(page);
+            refreshTasks(page);
+        },
+        [refreshTasks]
+    );
 
     // вызываем при загрузки страницы
     useEffect(() => {
-        refreshTasks();
-    }, [refreshTasks]);
+        refreshTasks(currentPage);
+    }, [refreshTasks, currentPage]);
 
     return (
         <div className={`todo container ${theme}-theme`}>
@@ -47,6 +70,7 @@ const Todo = () => {
             <PaginationComponent
                 currentPage={currentPage}
                 onPageChange={handlePageChange}
+                itemsPerPage={itemsPerPage}
             />
         </div>
     );

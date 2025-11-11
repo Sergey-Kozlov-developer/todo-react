@@ -12,6 +12,7 @@ interface PaginationComponentProps {
 const PaginationComponent = ({
     onPageChange,
     currentPage,
+    itemsPerPage = 6,
 }: PaginationComponentProps) => {
     const [totalPages, setTotalPages] = useState<number>(0);
     const pageTasks = useCallback(async () => {
@@ -19,7 +20,6 @@ const PaginationComponent = ({
         // API Получаем кол-во задач, сколько выводится на страницу
         // считаем сколько всего страниц отображать в пагинации
         const totalItems = pageData.total; // 254
-        const itemsPerPage = pageData.limit; // 6
         // кол-во страниц в пагинации
         const calculatedTotalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -28,12 +28,13 @@ const PaginationComponent = ({
         console.log("calculatedTotalPages", calculatedTotalPages);
 
         setTotalPages(calculatedTotalPages);
-    }, []);
+    }, [itemsPerPage]);
 
     const handlePageChange = (
         _event: React.ChangeEvent<unknown>,
         value: number
     ) => {
+        console.log("Клик по странице:", value);
         if (onPageChange) {
             onPageChange(value);
         }
@@ -51,6 +52,10 @@ const PaginationComponent = ({
                 onChange={handlePageChange}
                 variant="outlined"
                 color="primary"
+                size="large"
+                style={{
+                    margin: "0 auto",
+                }}
             />
         </Stack>
     );
