@@ -14,10 +14,7 @@ export class ApiService {
                     `Ошибка получения страниц из API: ${response.status}`
                 );
             }
-
             const pageApi = await response.json();
-            // console.log("Получены задачи страницы", page, ":", pageApi);
-
             return pageApi || [];
         } catch (error) {
             console.error("Ошибка при получении страниц ", error);

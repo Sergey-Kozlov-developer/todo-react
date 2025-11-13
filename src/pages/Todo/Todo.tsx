@@ -14,33 +14,31 @@ const Todo = () => {
     const [currentPage, setCurrentPage] = useState(1);
 
     const itemsPerPage = 8;
-    const page = 1;
+    // const page = 1;
 
-    // получаем данные с API
-    const refreshTasks = useCallback(async () => {
-        try {
+    // получаем данные пагинации
+    const refreshTasks = useCallback(
+        async (page: number = 1) => {
             const baseUrl = await ApiService.getTotalTasks(page, itemsPerPage);
             console.log("Получены задачи страницы", page, ":", baseUrl);
 
             setTasks(baseUrl.todos || []);
-        } catch (error) {
-            console.error("Failed to fetch todos:", error);
-            throw error;
-        }
-    }, [setTasks]);
+        },
+        [setTasks, itemsPerPage]
+    );
     // клик по кнопкам навигации
     const handlePageChange = useCallback(
         (page: number) => {
             console.log("Переход на страницу:", page);
             setCurrentPage(page);
-            refreshTasks();
+            refreshTasks(page);
         },
         [refreshTasks]
     );
 
     // вызываем при загрузки страницы
     useEffect(() => {
-        refreshTasks();
+        refreshTasks(currentPage);
     }, [refreshTasks, currentPage]);
 
     return (

@@ -12,7 +12,7 @@ interface PaginationComponentProps {
 const PaginationComponent = ({
     onPageChange,
     currentPage,
-    itemsPerPage = 6,
+    itemsPerPage = 8,
 }: PaginationComponentProps) => {
     const [totalPages, setTotalPages] = useState<number>(0);
     const pageTasks = useCallback(async () => {
