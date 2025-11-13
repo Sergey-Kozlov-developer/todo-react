@@ -2,21 +2,13 @@ import type { ITask } from "../context/useTaskState";
 
 export class ApiService {
     static #apiUrl = import.meta.env.VITE_APP_REMOTE_SERVER;
-    // метод проверки API на массив объектов
-    static getApiUrl() {
-        // Если это массив, берем первый элемент или возвращаем дефолтный URL
-        if (Array.isArray(this.#apiUrl)) {
-            console.warn("apiUrl is array, using default URL");
-            return this.#apiUrl;
-        }
-        return this.#apiUrl;
-    }
     // для пагинации и получении всех todo
-    static async getTotalTasks() {
+    static async getTotalTasks(page: number = 1, itemsPerPage = 8) {
         try {
-            const url = this.#apiUrl;
+            const skip = (page - 1) * itemsPerPage;
+            const baseUrl = this.#apiUrl;
+            const url = `${baseUrl}?limit=${itemsPerPage}&skip=${skip}`;
             const response = await fetch(url);
-
             if (!response.ok) {
                 throw new Error(
                     `Ошибка получения страниц из API: ${response.status}`
@@ -24,8 +16,9 @@ export class ApiService {
             }
 
             const pageApi = await response.json();
+            // console.log("Получены задачи страницы", page, ":", pageApi);
 
-            return pageApi;
+            return pageApi || [];
         } catch (error) {
             console.error("Ошибка при получении страниц ", error);
         }

@@ -14,48 +14,33 @@ const Todo = () => {
     const [currentPage, setCurrentPage] = useState(1);
 
     const itemsPerPage = 8;
+    const page = 1;
 
     // получаем данные с API
-    const refreshTasks = useCallback(
-        async (page: number = 1) => {
-            try {
-                const skip = (page - 1) * itemsPerPage;
-                const baseUrl = await ApiService.getApiUrl();
-                const url = `${baseUrl}?limit=${itemsPerPage}&skip=${skip}`;
+    const refreshTasks = useCallback(async () => {
+        try {
+            const baseUrl = await ApiService.getTotalTasks(page, itemsPerPage);
+            console.log("Получены задачи страницы", page, ":", baseUrl);
 
-                console.log("Запрос к API:", url);
-
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error(
-                        `Ошибка подключения к API: ${response.status}`
-                    );
-                }
-
-                const dataApi = await response.json();
-                console.log("Получены задачи страницы", page, ":", dataApi);
-
-                setTasks(dataApi.todos || []);
-            } catch (error) {
-                console.error("Failed to fetch todos:", error);
-                throw error;
-            }
-        },
-        [setTasks, itemsPerPage]
-    );
+            setTasks(baseUrl.todos || []);
+        } catch (error) {
+            console.error("Failed to fetch todos:", error);
+            throw error;
+        }
+    }, [setTasks]);
     // клик по кнопкам навигации
     const handlePageChange = useCallback(
         (page: number) => {
             console.log("Переход на страницу:", page);
             setCurrentPage(page);
-            refreshTasks(page);
+            refreshTasks();
         },
         [refreshTasks]
     );
 
     // вызываем при загрузки страницы
     useEffect(() => {
-        refreshTasks(currentPage);
+        refreshTasks();
     }, [refreshTasks, currentPage]);
 
     return (
