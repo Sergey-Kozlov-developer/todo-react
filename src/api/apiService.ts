@@ -1,21 +1,20 @@
 import type { ITask } from "../context/useTaskState";
 
 export class ApiService {
-    static apiUrl = import.meta.env.VITE_APP_REMOTE_SERVER;
+    static #apiUrl = import.meta.env.VITE_APP_REMOTE_SERVER;
     // метод проверки API на массив объектов
     static getApiUrl() {
         // Если это массив, берем первый элемент или возвращаем дефолтный URL
-        if (Array.isArray(this.apiUrl)) {
+        if (Array.isArray(this.#apiUrl)) {
             console.warn("apiUrl is array, using default URL");
-            return this.apiUrl;
+            return this.#apiUrl;
         }
-        return this.apiUrl;
+        return this.#apiUrl;
     }
-
     // для пагинации и получении всех todo
     static async getTotalTasks() {
         try {
-            const url = this.apiUrl;
+            const url = this.#apiUrl;
             const response = await fetch(url);
 
             if (!response.ok) {
@@ -35,11 +34,12 @@ export class ApiService {
     // update task при клике на чекбокс
     static async update(task: ITask) {
         try {
-            const response = await fetch(`${this.apiUrl}/${task.id}`, {
-                method: "PUT" /* or PATCH */,
+            const response = await fetch(`${this.#apiUrl}/${task.id}`, {
+                method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    completed: !task.completed,
+                    todo: task.todo,
+                    completed: task.completed,
                 }),
             });
             if (!response.ok) {
@@ -56,14 +56,10 @@ export class ApiService {
     // добавление задач
     static async onAddTask(task: ITask) {
         try {
-            const response = await fetch(`${this.apiUrl}/${task}`, {
+            const response = await fetch(`${this.#apiUrl}/${task}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    todo: "Use DummyJSON in the project",
-                    completed: !task.completed,
-                    userId: task.id,
-                }),
+                body: JSON.stringify({ task }),
             });
             if (!response.ok) {
                 throw new Error(`Ошибка добавления: ${response.status}`);
@@ -79,7 +75,7 @@ export class ApiService {
     // Удаление задач
     static async onDelete(id: number) {
         try {
-            const response = await fetch(`${this.apiUrl}/${id}`, {
+            const response = await fetch(`${this.#apiUrl}/${id}`, {
                 method: "DELETE",
             });
             if (!response.ok) {

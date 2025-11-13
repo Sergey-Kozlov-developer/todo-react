@@ -86,11 +86,7 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
     }, []);
     // ф-ция обрабатывает клик по checkbox
     const toggleTaskCompletion = useCallback(async (task: ITask) => {
-        try {
-            const updateTask = await ApiService.update(task);
-            dispatch({ type: "TOGGLE_TASK", taskId: task.id });
-            return updateTask;
-        } catch (error) {}
+        dispatch({ type: "TOGGLE_TASK", taskId: task.id });
     }, []);
     // ф-ция обрабатывает клик по иконке удаления
     const handleClickDeleteTask = useCallback((taskId: number) => {
