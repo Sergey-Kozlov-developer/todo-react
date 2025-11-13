@@ -14,7 +14,6 @@ const Todo = () => {
     const [currentPage, setCurrentPage] = useState(1);
 
     const itemsPerPage = 8;
-    // const page = 1;
 
     // получаем данные пагинации
     const refreshTasks = useCallback(
