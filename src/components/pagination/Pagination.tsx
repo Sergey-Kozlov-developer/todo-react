@@ -1,12 +1,16 @@
-import { Stack } from "@mui/material";
-import Pagination from "@mui/material/Pagination";
+import { Pagination, Stack } from "@mui/material";
+
 import { ApiService } from "../../api/apiService";
 import { useCallback, useEffect, useState } from "react";
+import styled from "@emotion/styled";
 
+const MyPagination = styled(Pagination)`
+    margin: 0 auto !important;
+`;
 interface PaginationComponentProps {
-    onPageChange?: (page: number) => void;
-    currentPage?: number;
-    itemsPerPage?: number;
+    onPageChange: (page: number) => void;
+    currentPage: number;
+    itemsPerPage: number;
 }
 
 const PaginationComponent = ({
@@ -35,9 +39,7 @@ const PaginationComponent = ({
         value: number
     ) => {
         console.log("Клик по странице:", value);
-        if (onPageChange) {
-            onPageChange(value);
-        }
+        onPageChange(value);
     };
 
     useEffect(() => {
@@ -46,16 +48,13 @@ const PaginationComponent = ({
 
     return (
         <Stack spacing={2}>
-            <Pagination
+            <MyPagination
                 count={totalPages}
                 page={currentPage}
                 onChange={handlePageChange}
                 variant="outlined"
                 color="primary"
                 size="large"
-                style={{
-                    margin: "0 auto",
-                }}
             />
         </Stack>
     );

@@ -22,7 +22,7 @@ const Todo = () => {
             const baseUrl = await ApiService.getTotalTasks(page, itemsPerPage);
             console.log("Получены задачи страницы", page, ":", baseUrl);
 
-            setTasks(baseUrl.todos || []);
+            setTasks(baseUrl.todos);
         },
         [setTasks, itemsPerPage]
     );

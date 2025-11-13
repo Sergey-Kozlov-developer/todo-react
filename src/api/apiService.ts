@@ -22,14 +22,13 @@ export class ApiService {
     }
 
     // update task при клике на чекбокс
-    static async update(task: ITask) {
+    static async update(task: Omit<ITask, "id" & "userId" & "isTemp">) {
         try {
             const response = await fetch(`${this.#apiUrl}/${task.id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    todo: task.todo,
-                    completed: task.completed,
+                    ...task,
                 }),
             });
             if (!response.ok) {
@@ -44,7 +43,7 @@ export class ApiService {
     }
 
     // добавление задач
-    static async onAddTask(task: ITask) {
+    static async addTask(task: ITask) {
         try {
             const response = await fetch(`${this.#apiUrl}/${task}`, {
                 method: "POST",
@@ -57,7 +56,7 @@ export class ApiService {
             const addTask = await response.json();
             return addTask;
         } catch (error) {
-            console.error("Ошибка добавления задачи: ", error);
+            console.error(error);
             throw error;
         }
     }
