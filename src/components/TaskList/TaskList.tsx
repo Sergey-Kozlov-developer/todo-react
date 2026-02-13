@@ -5,22 +5,20 @@ import TaskItem from "../TaskItem/TaskItem.tsx";
 import AddTaskModal from "../AddTaskModal/AddTaskModal.tsx";
 import TaskButton from "../TaskButton/TaskButton.tsx";
 import IconPlus from "../Icon/IconPlus.tsx";
-
-import { useTaskReducer } from "../../hook/useTaskReducer.ts";
+import { useTaskState } from "../../context/useTaskState.tsx";
 
 const TaskList = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const {
-        task,
-        filteredTasks,
+        taskState,
         toggleTaskCompletion,
         handleClickDeleteTask,
         editTask,
         addTask,
-    } = useTaskReducer();
+    } = useTaskState();
 
-    if (filteredTasks.length === 0) {
+    if (taskState.length === 0) {
         return <EmptyBlock />;
     }
 
@@ -28,16 +26,17 @@ const TaskList = () => {
         <>
             <div className="task-list">
                 <ul className="task-list__items">
-                    {filteredTasks.map((taskId) => (
+                    {taskState.map((task) => (
                         <TaskItem
-                            key={taskId}
-                            taskId={taskId}
-                            isCheck={task[taskId].completed}
-                            toggleCompleted={() => toggleTaskCompletion(taskId)}
-                            completed={task[taskId].completed}
-                            text={task[taskId].text}
-                            deleteTask={() => handleClickDeleteTask(taskId)}
+                            key={task.id}
+                            taskId={task.id}
+                            isCheck={task.completed}
+                            toggleCompleted={() => toggleTaskCompletion(task)}
+                            completed={task.completed}
+                            text={task.todo}
+                            deleteTask={() => handleClickDeleteTask(task.id)}
                             editTask={editTask}
+                            isTemp={task.isTemp}
                         />
                     ))}
                 </ul>

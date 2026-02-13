@@ -1,8 +1,8 @@
 // import type React from "react";
 import TaskButton from "../TaskButton/TaskButton";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
-import type { ITask } from "../../hook/useTaskReducer";
 import { useThrottleHook } from "../../hook/useThrottleHook";
+import type { ITask } from "../../context/useTaskState";
 
 interface AddTaskModalProps {
     onClose: () => void;
@@ -22,10 +22,11 @@ const AddTaskModal = ({ onClose, addTask }: AddTaskModalProps) => {
     const handleSubmit = () => {
         if (inputText.trim()) {
             const newTask: ITask = {
-                id: Date.now().toString(),
-                text: inputText.toString(),
+                id: Date.now(),
+                todo: inputText.toString(),
                 completed: false,
-                timestamp: new Date(),
+                userId: 1,
+                isTemp: true,
             };
 
             addTask(newTask);
